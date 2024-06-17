@@ -51,6 +51,10 @@ const Habit = sequelize.define('Habit', {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
   },
+  status: { // Add status field
+    type: DataTypes.ENUM('active', 'completed', 'abandoned'),
+    defaultValue: 'active',
+  },    
 });
 
 module.exports = Habit;
