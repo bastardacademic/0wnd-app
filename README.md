@@ -2,7 +2,7 @@
 
 ## Overview
 
-Ownd is a habit-tracking application that allows users to set and track habits, assign rewards and consequences, and facilitate private journaling and communication. The application supports two user roles: Dominant (Habit Setter) and Submissive (Habit Tracker).
+Ownd is a habit-tracking application that allows users to set and track habits, assign rewards and consequences, and facilitate private journaling and communication. Analytics are included to track habits over a long period, and badges and achievements canbe earned and displayed. The application currently supports two user roles: Dominant (Habit Setter) and Submissive (Habit Tracker).
 
 ## Features
 
