@@ -17,7 +17,7 @@ function Rewards() {
         }
 
         return (
-            <div key={reward._id} className={eward }>
+            <div key={reward._id} className={`reward ${reward.isPremium ? 'premium-reward' : ''}`}>
                 <h3>{reward.rewardType}</h3>
                 <p>Points: {reward.points}</p>
                 {reward.isPremium && <span className='badge badge-premium'>Premium</span>}

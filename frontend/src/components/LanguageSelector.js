@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 const LanguageSelector = () => {
     const [language, setLanguage] = useState('en-GB');
 
