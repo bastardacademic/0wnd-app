@@ -1,1 +1,0 @@
-<your_updated_Register.js_code>
