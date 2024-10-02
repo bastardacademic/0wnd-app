@@ -1,38 +1,31 @@
-# Ownd Developer Documentation
+# Ownd Developer Guide
 
 ## Project Structure
 \\\
 Ownd-App/
-+-- backend/
-¦   +-- models/           # MongoDB schemas
-¦   +-- routes/           # Express API routes
-¦   +-- middleware/       # Authentication and encryption middleware
-¦   +-- server.js         # Main Express server
-+-- frontend/
-¦   +-- src/
-¦   ¦   +-- components/   # React components
-¦   ¦   +-- services/     # API services
-¦   +-- App.js            # Main React app entry point
-+-- docs/                 # Documentation
-+-- Testing/              # Unit and integration tests
-+-- README.md             # Project overview
++-- backend/         # Express.js backend
+    +-- models/      # MongoDB schemas
+    +-- routes/      # API routes (habits, journal, chat)
+    +-- middleware/  # Authentication and encryption middleware
+    +-- server.js    # Main server file
++-- frontend/        # React frontend
+    +-- src/
+        +-- components/  # React components (Habit tracking, journaling, chat)
+        +-- services/    # API services for backend interaction
+    +-- App.js      # Main entry point
++-- docs/           # Documentation files
++-- Testing/        # Unit and integration tests
++-- README.md       # Project overview
 \\\
 
-## Backend Setup
-1. **Environment Variables**: Configure a \.env\ file with:
-   - MONGO_URI, JWT_SECRET, ENCRYPTION_KEY, FIREBASE_KEY
-2. **API Endpoints**:
-   - /api/habits (POST/GET/PUT)
-   - /api/journal (POST/GET)
-   - /api/chat (POST/GET)
+## API Endpoints
+- **/api/habits** (POST/GET/PUT/DELETE): CRUD operations for habits.
+- **/api/journal** (POST/GET): Create and retrieve journal entries.
+- **/api/chat** (POST/GET): Encrypted messages between users.
 
-## Frontend Setup
-1. **Dependencies**:
-   - React, Redux, React-Quill, D3.js, Firebase.
-2. **Components**:
-   - HabitChain.js: Visualize habit progress using D3.js.
-   - JournalEntry.js: Rich text editor for journals.
+## Database
+We use MongoDB for its flexibility and document-based schema, making it easy to manage users, habits, and journal entries.
 
-## Testing Framework
-- **Backend**: Jest and Supertest for API routes.
-- **Frontend**: Jest and React Testing Library.
+## Testing
+- **Jest**: For unit testing.
+- **Supertest**: For integration tests.
