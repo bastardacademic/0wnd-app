@@ -21,3 +21,50 @@ graph TD;
 \\\
 
 For more details, see the [Functionality Overview](docs/FunctionalityOverview.md) and [Data Flow and ERD](docs/DataFlowAndSchema.md).
+## Additional Information
+
+### Data Flow Diagram
+\\\mermaid
+graph TD;
+    User --> Frontend;
+    Frontend --> APIGateway;
+    APIGateway --> Database;
+    APIGateway --> AuthService;
+    APIGateway --> DataService;
+    APIGateway --> PushNotification;
+    PushNotification --> Firebase;
+\\\
+
+### Entity-Relationship Diagram (ERD)
+\\\mermaid
+erDiagram
+    USER {
+        string userId
+        string email
+        string role
+        string password
+    }
+    HABIT {
+        string userId
+        string title
+        string frequency
+        string status
+    }
+    JOURNAL {
+        string userId
+        string content
+        string category
+        string createdAt
+    }
+    MESSAGE {
+        string senderId
+        string content
+        string media
+        boolean isBurnOnView
+    }
+    USER ||--o{ HABIT : has
+    USER ||--o{ JOURNAL : writes
+    USER ||--o{ MESSAGE : sends
+\\\
+
+For more details, see the [Functionality Overview](docs/FunctionalityOverview.md) and [Data Flow and ERD](docs/DataFlowAndSchema.md).
