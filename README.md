@@ -171,32 +171,32 @@ To get started with Ownd, follow the installation steps below:
    cd ownd-app
 
 2. Install backend dependencies:
-```bash
-cd backend
-npm install
-```
+    ```bash
+    cd backend
+    npm install
+    ```
 
 3. Install frontend dependencies:
-```bash
-cd ../frontend
-npm install
-```
+    ```bash
+    cd ../frontend
+    npm install
+    ```
 
 4. Configure environment variables: Create a .env file in the backend directory and add your MongoDB, JWT, and Firebase credentials.
 
 Run the development servers:
 
-Backend:
-```bash
-cd backend
-npm start
-```
+  - Backend:
+    ```bash
+    cd backend
+    npm start
+    ```
 
-Frontend:
-```bash
-cd frontend
-npm start
-```
+ - Frontend:
+    ```bash
+    cd frontend
+    npm start
+    ```
 
 ## Contributing
 Contributions are welcome! Please follow our contribution guidelines before submitting pull requests.
