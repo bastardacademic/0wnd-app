@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # Ownd Functionality Overview
 
 ## Core Features
@@ -19,3 +20,5 @@
 - **Burn-on-view media**: Images and other sensitive media can be sent and viewed once, with burn-on-view and screenshot prevention.
 - **Rich text editor**: Provides journaling with enhanced formatting capabilities.
 
+=======
+>>>>>>> Stashed changes
