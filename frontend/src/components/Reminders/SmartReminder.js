@@ -10,7 +10,6 @@ const SmartReminder = () => {
 
   useEffect(() => {
     dispatch(fetchHabitData());
-    // Generate smart reminders based on habit progress
     const smartReminders = habits.map((habit) => ({
       title: Don't forget your habit: ,
       time: habit.nextDueDate

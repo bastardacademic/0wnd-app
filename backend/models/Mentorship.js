@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const mentorshipSchema = new mongoose.Schema({
-  mentorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  menteeId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  startDate: { type: Date, default: Date.now },
-  tasksAssigned: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }],
-  isActive: { type: Boolean, default: true },
-  premiumFeature: { type: Boolean, default: true }  // Only accessible with premium
+const MentorshipSchema = new mongoose.Schema({
+  mentorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  menteeId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  startDate: { type: Date, required: true },
+  goals: { type: [String], required: true },
+  feedback: { type: String }
 });
 
-module.exports = mongoose.model('Mentorship', mentorshipSchema);
+const Mentorship = mongoose.model('Mentorship', MentorshipSchema);
+module.exports = Mentorship;
