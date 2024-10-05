@@ -1,7 +1,7 @@
 # Ownd Developer Guide
 
 ## Project Structure
-\\\
+```
 Ownd-App/
 +-- backend/         # Express.js backend
     +-- models/      # MongoDB schemas
@@ -16,7 +16,7 @@ Ownd-App/
 +-- docs/           # Documentation files
 +-- Testing/        # Unit and integration tests
 +-- README.md       # Project overview
-\\\
+```
 
 ## API Endpoints
 - **/api/habits** (POST/GET/PUT/DELETE): CRUD operations for habits.
