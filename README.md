@@ -101,6 +101,11 @@ graph TD;
     APIGateway --> DataService;
     APIGateway --> PushNotification;
     PushNotification --> Firebase;
+```
+
+## Entity Relationship Diagram (ERD)
+
+```mermaid
 erDiagram
     USER {
         string userId
