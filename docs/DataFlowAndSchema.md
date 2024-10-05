@@ -10,7 +10,11 @@ graph TD;
     APIGateway --> DataService;
     APIGateway --> PushNotification;
     PushNotification --> Firebase;
+```
 
+
+## Entity Relationship Diagram (ERD)
+```mermaid
 erDiagram
     USER {
         string userId
@@ -39,3 +43,4 @@ erDiagram
     USER ||--o{ HABIT : has
     USER ||--o{ JOURNAL : writes
     USER ||--o{ MESSAGE : sends
+```
