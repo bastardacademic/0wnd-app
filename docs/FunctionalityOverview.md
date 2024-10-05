@@ -19,6 +19,9 @@
 - **Role-Based Access Control**: Only Dominants (D) can create and assign tasks, while Submissives (S) can track and manage their completion.
 - **Burn-on-view media**: Images and other sensitive media can be sent and viewed once, with burn-on-view and screenshot prevention.
 - **Rich text editor**: Provides journaling with enhanced formatting capabilities.
+<<<<<<< HEAD
 
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> 520edbeafa29edcc2d2e6e5970cf621d722fe41a
