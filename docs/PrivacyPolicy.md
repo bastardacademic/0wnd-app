@@ -17,3 +17,4 @@ We use your data to:
 Your data is protected using end-to-end encryption for sensitive information such as chats and journal entries.
 
 For more details, please visit our Terms & Conditions.
+
