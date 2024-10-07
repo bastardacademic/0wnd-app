@@ -1,0 +1,20 @@
+body {
+  background-color: #2D0C39; /* Dark Purple */
+  color: #CBAA76; /* Gold */
+}
+
+button {
+  background-color: #4C1C24; /* Deep Burgundy */
+  color: #CBAA76; /* Gold */
+  border: 1px solid #CBAA76; /* Gold Border */
+}
+
+button:hover {
+  background-color: #FF6F61; /* Coral */
+}
+
+input, textarea {
+  background-color: #5A5A5A; /* Slate Gray */
+  color: #CBAA76; /* Gold */
+  border: 1px solid #CBAA76; /* Gold Border */
+}
