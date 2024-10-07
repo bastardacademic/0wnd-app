@@ -1,21 +1,19 @@
-# Ownd Privacy Policy
+# Privacy Policy
 
-**Effective Date**: [Insert Date]
+## Introduction
+This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use the Ownd App.
 
-## 1. Introduction
-Your privacy is important to us at Ownd. This Privacy Policy outlines how we collect, use, and safeguard your personal information when you use our mobile app.
+## Information We Collect
+- **Personal Data**: Email, role, and username.
+- **Activity Data**: Tasks, journal entries, chat messages.
+- **Usage Data**: App usage statistics, habit tracking progress.
 
-## 2. Information We Collect
-- **Account Information**: Email, username, and user role.
-- **Journals & Messages**: Encrypted journal entries and chat messages.
-- **Usage Data**: Anonymized app usage for improving the service.
+## How We Use Your Information
+We use your data to:
+- Provide and maintain the app functionality.
+- Improve the user experience through analytics.
 
-## 3. How We Use Your Data
-- To provide, maintain, and improve the app.
-- To notify you about reminders and habits.
+## Data Protection
+Your data is protected using end-to-end encryption for sensitive information such as chats and journal entries.
 
-## 4. Data Security
-We use AES-256 encryption for journal entries and messages, ensuring data protection.
-
-## 5. Your Rights
-You have the right to delete your data or request a copy of it at any time.
+For more details, please visit our Terms & Conditions.

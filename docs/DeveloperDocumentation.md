@@ -1,31 +1,15 @@
-# Ownd Developer Guide
+# Ownd App - Developer Documentation
 
-## Project Structure
-```
-Ownd-App/
-+-- backend/         # Express.js backend
-    +-- models/      # MongoDB schemas
-    +-- routes/      # API routes (habits, journal, chat)
-    +-- middleware/  # Authentication and encryption middleware
-    +-- server.js    # Main server file
-+-- frontend/        # React frontend
-    +-- src/
-        +-- components/  # React components (Habit tracking, journaling, chat)
-        +-- services/    # API services for backend interaction
-    +-- App.js      # Main entry point
-+-- docs/           # Documentation files
-+-- Testing/        # Unit and integration tests
-+-- README.md       # Project overview
-```
+## Key Features
+1. **Habit Tracking**: Dominants set tasks, and Submissives track progress.
+2. **Encrypted Journaling**: Secure journal entries with private and shared categories.
+3. **Gamification**: Users are rewarded with badges for habit completion.
+4. **Multi-Language Support**: Available in multiple languages via i18next.
 
-## API Endpoints
-- **/api/habits** (POST/GET/PUT/DELETE): CRUD operations for habits.
-- **/api/journal** (POST/GET): Create and retrieve journal entries.
-- **/api/chat** (POST/GET): Encrypted messages between users.
+## Backend
+- **Node.js**: Server-side logic, with Express handling API requests.
+- **MongoDB**: NoSQL database storing users, habits, journals, and chats.
 
-## Database
-We use MongoDB for its flexibility and document-based schema, making it easy to manage users, habits, and journal entries.
-
-## Testing
-- **Jest**: For unit testing.
-- **Supertest**: For integration tests.
+## Frontend
+- **React.js**: Dynamic UI built using React components.
+- **i18n**: Language detection and translation for multi-language support.
