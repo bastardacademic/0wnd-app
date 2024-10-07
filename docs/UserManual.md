@@ -1,18 +1,18 @@
-# Ownd App - User Manual
+# User Manual
 
-## Overview
-Ownd is an app designed for setting and tracking habits, journaling, and maintaining private chats with encryption. It is intended for Dominant and Submissive users, where tasks are created, tracked, and rewarded.
-
-## Key Features
-- **Habit Tracking**: Dominants set tasks for Submissives.
-- **Journaling**: Journals can be private, shared with trusted partners, or public.
-- **Gamification**: Earn badges for completing tasks.
-- **Push Notifications**: Receive reminders for tasks.
+## Introduction
+The Ownd App is designed to track habits, set tasks, and manage journal entries.
 
 ## Getting Started
-1. **Register/Login**: Create an account and select your role (Dominant or Submissive).
-2. **Set Up Your Profile**: Personalize your profile.
-3. **Create Tasks**: Dominants can set tasks for their Submissives.
-4. **Track Tasks**: Submissives track progress, and both can view habit chains.
+1. **Sign Up**: Create an account using your email address.
+2. **Set Your Role**: Choose between Dominant (habit setter) or Submissive (habit tracker).
+3. **Track Your Progress**: View tasks, track habits, and log journal entries.
 
-For more details, please visit our FAQ section.
+## Core Features
+- **Habit Tracking**: Dominants set tasks, Submissives track progress.
+- **Journaling**: Record your thoughts in private, shared, or public journals.
+- **Notifications**: Set reminders to stay on top of your habits.
+
+## Additional Features
+- **Custom Reminders**: Tailored notifications to keep you on track.
+- **Shared Journal Entries**: Link entries with trusted partners.
