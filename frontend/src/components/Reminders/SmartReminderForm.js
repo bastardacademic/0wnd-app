@@ -1,0 +1,3 @@
+import React from 'react';
+// Smart Reminder Form code...
+export default SmartReminderForm;
