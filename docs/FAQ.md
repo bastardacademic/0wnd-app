@@ -20,3 +20,18 @@ Go to **Settings** > **Account** > **Delete Account**. Note that once deleted, y
 
 ### 7. What happens to my data after I delete my account?
 Upon deletion, your data is permanently erased from our servers, and any chats or journals are no longer accessible.
+
+### 8. How do I reset my password?
+- Navigate to the login page and click "Forgot Password." Follow the prompts to reset your password via email.
+
+### 9. Can I switch my role after signing up?
+- No, your role as Dominant or Submissive is permanent once set.
+
+### 10. What should I do if I don’t receive notifications?
+- Ensure notifications are enabled in both the app's settings and your device’s notification settings.
+
+### 11. Is my data safe?
+- Yes, all chats and journal entries are end-to-end encrypted, ensuring your data remains private.
+
+## Contact Support
+For any issues, questions, or feedback, please contact our support team through the in-app "Contact Support" option or email us at
