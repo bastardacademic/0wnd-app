@@ -1,16 +1,14 @@
-import './styles/UITheme.css'; // Import the updated UI/UX theme
+import React from 'react';
+import HabitTracker from './components/HabitTracker';
+import Journal from './components/Journal';
 
 function App() {
-  return (
-    <div className='App'>
-      <header>
-        <h1>Ownd App</h1>
-      </header>
-      <main>
-        {/* Components (Habit Tracker, Journal, Chat, etc.) */}
-      </main>
-    </div>
-  );
+    return (
+        <div className="App">
+            <HabitTracker />
+            <Journal />
+        </div>
+    );
 }
 
 export default App;
