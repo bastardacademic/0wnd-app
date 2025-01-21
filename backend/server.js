@@ -1,40 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
-
-// Routes
-const habitRoutes = require('./routes/habits');
-const userRoutes = require('./routes/users');
-const journalRoutes = require('./routes/journals');
-const chatRoutes = require('./routes/chats');
-
-dotenv.config();
-
 const app = express();
+const mongoose = require('mongoose');
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
-app.use(morgan('dev'));
+mongoose.connect('mongodb://localhost/ownd', { useNewUrlParser: true });
 
-// Routes
-app.use('/api/habits', habitRoutes);
+app.use(express.json());
+
+const userRoutes = require('./routes/users');
 app.use('/api/users', userRoutes);
-app.use('/api/journals', journalRoutes);
-app.use('/api/chats', chatRoutes);
 
-// Database Connection
-mongoose
-    .connect(process.env.MONGO_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-    .then(() => console.log('MongoDB connected'))
-    .catch((err) => console.log('MongoDB connection error:', err));
-
-// Start Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(Server running on port ));
+app.listen(5000, () => console.log('Server started on port 5000'));
