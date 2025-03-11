@@ -1,20 +1,11 @@
-body {
-  background-color: #2D0C39; /* Dark Purple */
-  color: #CBAA76; /* Gold */
+h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--soft-gold);
 }
-
-button {
-  background-color: #4C1C24; /* Deep Burgundy */
-  color: #CBAA76; /* Gold */
-  border: 1px solid #CBAA76; /* Gold Border */
-}
-
-button:hover {
-  background-color: #FF6F61; /* Coral */
-}
-
-input, textarea {
-  background-color: #5A5A5A; /* Slate Gray */
-  color: #CBAA76; /* Gold */
-  border: 1px solid #CBAA76; /* Gold Border */
+body, p, span {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    color: var(--soft-gold);
 }
