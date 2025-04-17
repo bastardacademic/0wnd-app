@@ -368,3 +368,94 @@ router.post('/api/groups/:id/chat/:threadId', requireAuth, async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+//
+// GROUP MODERATION ENDPOINTS
+//
+
+// GET /api/groups/:id/moderation
+router.get('/api/groups/:id/moderation', requireAuth, async (req, res) => {
+  const groupId = req.params.id;
+  const userId = req.user.id;
+
+  const group = await db.group.findUnique({
+    where: { id: groupId },
+    include: { coOwners: true, admins: true },
+  });
+
+  if (!group || ![group.ownerId, ...group.coOwners.map(u => u.id), ...group.admins.map(u => u.id)].includes(userId)) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
+  const queue = await db.groupPost.findMany({
+    where: { groupId, flagged: true, reviewed: false },
+    select: {
+      id: true,
+      content: true,
+      authorId: true,
+      createdAt: true,
+    },
+    orderBy: { createdAt: 'asc' },
+  });
+
+  res.json({ queue });
+});
+
+// POST /api/groups/:id/moderate
+router.post('/api/groups/:id/moderate', requireAuth, async (req, res) => {
+  const { groupId } = req.params;
+  const { postId, action } = req.body;
+  const userId = req.user.id;
+
+  const group = await db.group.findUnique({
+    where: { id: groupId },
+    include: { coOwners: true, admins: true },
+  });
+
+  const isMod = group && [group.ownerId, ...group.coOwners.map(u => u.id), ...group.admins.map(u => u.id)].includes(userId);
+  if (!isMod) return res.status(403).json({ error: 'Forbidden' });
+
+  const update = await db.groupPost.update({
+    where: { id: postId },
+    data: {
+      reviewed: true,
+      approved: action === 'approve',
+      reviewedBy: userId,
+      reviewedAt: new Date(),
+    },
+  });
+
+  await db.moderationLog.create({
+    data: {
+      groupId,
+      postId,
+      reviewerId: userId,
+      action,
+      timestamp: new Date(),
+    },
+  });
+
+  res.json({ success: true });
+});
+
+// GET /api/groups/:id/mod-log
+router.get('/api/groups/:id/mod-log', requireAuth, async (req, res) => {
+  const groupId = req.params.id;
+  const userId = req.user.id;
+
+  const group = await db.group.findUnique({
+    where: { id: groupId },
+    include: { coOwners: true, admins: true },
+  });
+
+  const isMod = group && [group.ownerId, ...group.coOwners.map(u => u.id), ...group.admins.map(u => u.id)].includes(userId);
+  if (!isMod) return res.status(403).json({ error: 'Forbidden' });
+
+  const log = await db.moderationLog.findMany({
+    where: { groupId },
+    orderBy: { timestamp: 'desc' },
+  });
+
+  res.setHeader('Content-Disposition', 'attachment; filename=moderation-log.json');
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(log, null, 2));
+});
