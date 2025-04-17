@@ -265,3 +265,106 @@ router.delete('/api/groups/:id/events/:eventId', requireAuth, async (req, res) =
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+//
+// GROUP CHAT & MEDIA THREADS
+//
+
+// GET /api/groups/:id/chat
+router.get('/api/groups/:id/chat', requireAuth, async (req, res) => {
+  const groupId = req.params.id;
+  const userId = req.user.id;
+
+  try {
+    const group = await db.group.findUnique({
+      where: { id: groupId },
+      include: { members: true },
+    });
+
+    if (!group) return res.status(404).json({ error: 'Group not found' });
+    const isMember = group.members.some((u) => u.id === userId);
+    if (!isMember) return res.status(403).json({ error: 'Not a member' });
+
+    const threads = await db.chatThread.findMany({
+      where: { groupId },
+      orderBy: { updatedAt: 'desc' },
+    });
+
+    res.json({ threads });
+  } catch (err) {
+    console.error('Failed to load chat threads:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// GET /api/groups/:id/chat/:threadId
+router.get('/api/groups/:id/chat/:threadId', requireAuth, async (req, res) => {
+  const { id: groupId, threadId } = req.params;
+  const userId = req.user.id;
+
+  try {
+    const group = await db.group.findUnique({
+      where: { id: groupId },
+      include: { members: true },
+    });
+
+    if (!group) return res.status(404).json({ error: 'Group not found' });
+    const isMember = group.members.some((u) => u.id === userId);
+    if (!isMember) return res.status(403).json({ error: 'Not a member' });
+
+    const messages = await db.chatMessage.findMany({
+      where: {
+        threadId,
+        OR: [
+          { burnAfterView: false },
+          { viewedBy: { none: { id: userId } } }
+        ],
+      },
+      orderBy: { createdAt: 'asc' },
+    });
+
+    res.json({ messages });
+  } catch (err) {
+    console.error('Failed to load thread messages:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// POST /api/groups/:id/chat/:threadId
+router.post('/api/groups/:id/chat/:threadId', requireAuth, async (req, res) => {
+  const { id: groupId, threadId } = req.params;
+  const userId = req.user.id;
+  const { message, type, media, burnAfterView } = req.body;
+
+  try {
+    const group = await db.group.findUnique({
+      where: { id: groupId },
+      include: { members: true },
+    });
+
+    if (!group) return res.status(404).json({ error: 'Group not found' });
+    const isMember = group.members.some((u) => u.id === userId);
+    if (!isMember) return res.status(403).json({ error: 'Not a member' });
+
+    const msg = await db.chatMessage.create({
+      data: {
+        threadId,
+        groupId,
+        senderId: userId,
+        message,
+        type,
+        media,
+        burnAfterView: !!burnAfterView,
+      },
+    });
+
+    await db.chatThread.update({
+      where: { id: threadId },
+      data: { updatedAt: new Date() },
+    });
+
+    res.json({ success: true, msg });
+  } catch (err) {
+    console.error('Message send failed:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
