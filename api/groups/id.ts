@@ -459,3 +459,51 @@ router.get('/api/groups/:id/mod-log', requireAuth, async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(log, null, 2));
 });
+//
+// GROUP EVENT ATTENDANCE TOGGLE
+//
+
+router.post('/api/groups/:id/events/:eventId/attend', requireAuth, async (req, res) => {
+  const { id: groupId, eventId } = req.params;
+  const userId = req.user.id;
+
+  const group = await db.group.findUnique({
+    where: { id: groupId },
+    include: { members: true },
+  });
+
+  if (!group || !group.members.some((u) => u.id === userId)) {
+    return res.status(403).json({ error: 'Not a group member' });
+  }
+
+  const existing = await db.eventAttendance.findUnique({
+    where: {
+      eventId_userId: {
+        eventId,
+        userId,
+      },
+    },
+  });
+
+  if (existing) {
+    await db.eventAttendance.delete({
+      where: {
+        eventId_userId: {
+          eventId,
+          userId,
+        },
+      },
+    });
+    const count = await db.eventAttendance.count({ where: { eventId } });
+    return res.json({ attending: false, count });
+  } else {
+    await db.eventAttendance.create({
+      data: {
+        eventId,
+        userId,
+      },
+    });
+    const count = await db.eventAttendance.count({ where: { eventId } });
+    return res.json({ attending: true, count });
+  }
+});
