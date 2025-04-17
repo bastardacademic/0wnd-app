@@ -160,3 +160,108 @@ router.get('/api/groups/:id/events', requireAuth, async (req, res) => {
 });
 
 export default router;
+//
+// GROUP EVENT ROUTES
+//
+
+// POST /api/groups/:id/events
+router.post('/api/groups/:id/events', requireAuth, async (req, res) => {
+  const groupId = req.params.id;
+  const userId = req.user.id;
+  const { title, description, type, date, location, visibility, repeatInterval } = req.body;
+
+  try {
+    const group = await db.group.findUnique({
+      where: { id: groupId },
+      include: { members: true },
+    });
+
+    if (!group) return res.status(404).json({ error: 'Group not found' });
+
+    const isMember = group.members.some((u) => u.id === userId);
+    if (!isMember) return res.status(403).json({ error: 'Not a group member' });
+
+    const event = await db.event.create({
+      data: {
+        title,
+        description,
+        type,
+        date: new Date(date),
+        location,
+        visibility,
+        repeatInterval,
+        groupId,
+        creatorId: userId,
+      },
+    });
+
+    res.json({ success: true, event });
+  } catch (err) {
+    console.error('Event creation failed:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// PATCH /api/groups/:id/events/:eventId
+router.patch('/api/groups/:id/events/:eventId', requireAuth, async (req, res) => {
+  const { id: groupId, eventId } = req.params;
+  const userId = req.user.id;
+  const updates = req.body;
+
+  try {
+    const group = await db.group.findUnique({
+      where: { id: groupId },
+      include: { coOwners: true, admins: true },
+    });
+
+    if (!group) return res.status(404).json({ error: 'Group not found' });
+
+    const isPrivileged =
+      group.ownerId === userId ||
+      group.coOwners.some((u) => u.id === userId) ||
+      group.admins.some((u) => u.id === userId);
+
+    if (!isPrivileged) return res.status(403).json({ error: 'Not allowed to edit events' });
+
+    const event = await db.event.update({
+      where: { id: eventId },
+      data: {
+        ...updates,
+        ...(updates.date ? { date: new Date(updates.date) } : {}),
+      },
+    });
+
+    res.json({ success: true, event });
+  } catch (err) {
+    console.error('Event update failed:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// DELETE /api/groups/:id/events/:eventId
+router.delete('/api/groups/:id/events/:eventId', requireAuth, async (req, res) => {
+  const { id: groupId, eventId } = req.params;
+  const userId = req.user.id;
+
+  try {
+    const group = await db.group.findUnique({
+      where: { id: groupId },
+      include: { coOwners: true, admins: true },
+    });
+
+    if (!group) return res.status(404).json({ error: 'Group not found' });
+
+    const isPrivileged =
+      group.ownerId === userId ||
+      group.coOwners.some((u) => u.id === userId) ||
+      group.admins.some((u) => u.id === userId);
+
+    if (!isPrivileged) return res.status(403).json({ error: 'Not allowed to delete events' });
+
+    await db.event.delete({ where: { id: eventId } });
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Event deletion failed:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
