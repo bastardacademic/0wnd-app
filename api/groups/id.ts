@@ -507,3 +507,57 @@ router.post('/api/groups/:id/events/:eventId/attend', requireAuth, async (req, r
     return res.json({ attending: true, count });
   }
 });
+//
+// GROUP MEDIA UPLOAD
+//
+
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs/promises';
+
+const storage = multer.diskStorage({
+  destination: async (req, file, cb) => {
+    const groupId = req.params.id;
+    const uploadPath = path.join(process.cwd(), 'public', 'uploads', 'groups', groupId);
+    await fs.mkdir(uploadPath, { recursive: true });
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    const timestamp = Date.now();
+    const ext = path.extname(file.originalname);
+    cb(null, \\-\\\);
+  }
+});
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 50 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const allowed = ['image/', 'video/', 'audio/'].some(type => file.mimetype.startsWith(type));
+    cb(null, allowed);
+  }
+}).single('file');
+
+router.post('/api/groups/:id/upload-media', requireAuth, (req, res) => {
+  const userId = req.user.id;
+  const groupId = req.params.id;
+
+  db.group.findUnique({
+    where: { id: groupId },
+    include: { members: true }
+  }).then(group => {
+    if (!group || !group.members.some(m => m.id === userId)) {
+      return res.status(403).json({ error: 'Not a member' });
+    }
+
+    upload(req, res, err => {
+      if (err) {
+        console.error('Upload failed:', err);
+        return res.status(400).json({ error: err.message });
+      }
+
+      const fileUrl = \/uploads/groups/\/\\;
+      res.json({ url: fileUrl });
+    });
+  });
+});
