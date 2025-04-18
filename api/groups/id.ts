@@ -561,3 +561,52 @@ router.post('/api/groups/:id/upload-media', requireAuth, (req, res) => {
     });
   });
 });
+//
+// GROUP JOIN / LEAVE
+//
+
+router.post('/api/groups/:id/join', requireAuth, async (req, res) => {
+  const groupId = req.params.id;
+  const userId = req.user.id;
+
+  const group = await db.group.findUnique({
+    where: { id: groupId },
+    select: { isPrivate: true, members: { where: { id: userId } } },
+  });
+
+  if (!group) return res.status(404).json({ error: 'Group not found' });
+  if (group.isPrivate) return res.status(403).json({ error: 'Private group. Request required.' });
+  if (group.members.length > 0) return res.json({ joined: true });
+
+  await db.group.update({
+    where: { id: groupId },
+    data: {
+      members: { connect: { id: userId } },
+    },
+  });
+
+  res.json({ joined: true });
+});
+
+router.post('/api/groups/:id/leave', requireAuth, async (req, res) => {
+  const groupId = req.params.id;
+  const userId = req.user.id;
+
+  const group = await db.group.findUnique({
+    where: { id: groupId },
+    select: { members: { where: { id: userId } } },
+  });
+
+  if (!group || group.members.length === 0) {
+    return res.status(400).json({ error: 'You are not a member' });
+  }
+
+  await db.group.update({
+    where: { id: groupId },
+    data: {
+      members: { disconnect: { id: userId } },
+    },
+  });
+
+  res.json({ left: true });
+});
