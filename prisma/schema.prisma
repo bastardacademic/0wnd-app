@@ -1,0 +1,112 @@
+﻿generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String?
+  password    String
+  isSuperAdmin Boolean @default(false)
+  createdAt   DateTime @default(now())
+
+  posts       Post[]
+  messages    ChatMessage[]
+  threads     ThreadMember[]
+}
+
+model Group {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  ownerId     String
+  createdAt   DateTime @default(now())
+
+  owner       User     @relation(fields: [ownerId], references: [id])
+  events      GroupEvent[]
+  members     GroupMember[]
+  posts       Post[]
+}
+
+model GroupEvent {
+  id        String   @id @default(cuid())
+  groupId   String
+  title     String
+  description String
+  date      DateTime
+  location  String
+  createdAt DateTime @default(now())
+
+  group     Group    @relation(fields: [groupId], references: [id])
+}
+
+model GroupMember {
+  id       String @id @default(cuid())
+  groupId  String
+  userId   String
+
+  group    Group @relation(fields: [groupId], references: [id])
+  user     User  @relation(fields: [userId], references: [id])
+}
+
+model Post {
+  id          String   @id @default(cuid())
+  userId      String
+  groupId     String?
+  content     String
+  mediaUrl    String?
+  type        String   @default("journal")
+  visibility  String   @default("private")
+  createdAt   DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id])
+  group       Group?   @relation(fields: [groupId], references: [id])
+  tags        Tag[]
+}
+
+model Tag {
+  id    String  @id @default(cuid())
+  name  String  @unique
+  posts Post[]
+}
+
+model ChatThread {
+  id          String   @id @default(cuid())
+  type        String   @default("dm")
+  title       String?
+  groupId     String?  @relation(fields: [groupId], references: [id])
+  isBurnable  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  messages    ChatMessage[]
+  members     ThreadMember[]
+}
+
+model ChatMessage {
+  id          String   @id @default(cuid())
+  threadId    String
+  senderId    String
+  content     String?
+  mediaUrl    String?
+  burnOnView  Boolean  @default(false)
+  viewedAt    DateTime?
+  createdAt   DateTime @default(now())
+
+  thread      ChatThread @relation(fields: [threadId], references: [id])
+  sender      User       @relation(fields: [senderId], references: [id])
+}
+
+model ThreadMember {
+  threadId  String
+  userId    String
+
+  thread    ChatThread @relation(fields: [threadId], references: [id])
+  user      User       @relation(fields: [userId], references: [id])
+
+  @@id([threadId, userId])
+}
