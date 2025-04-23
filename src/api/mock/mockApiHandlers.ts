@@ -23,3 +23,20 @@ app.post("/api/promptResponses", (req, res) => {
 });
 
 export default app;
+
+// POST /api/rituals
+app.post("/api/rituals", (req, res) => {
+  const ritual = { id: Math.random().toString(36).substring(2), ...req.body, active: true };
+  mockDb.rituals.push(ritual);
+  res.status(201).json(ritual);
+});
+
+// GET /api/rituals
+app.get("/api/rituals", (req, res) => {
+  const userId = req.headers["x-user-id"];
+  const isDom = mockDb.users.find(u => u.id === userId)?.role === "dom";
+  const data = isDom
+    ? mockDb.rituals.filter(r => r.domId === userId)
+    : mockDb.rituals.filter(r => r.subId === userId);
+  res.json(data);
+});

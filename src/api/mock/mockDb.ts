@@ -4,6 +4,7 @@
     { id: "dom456", displayName: "Dom Test", role: "dom" }
   ],
   rituals: [],
+  ritualSubmissions: [],
   journals: [],
   devotion: [],
   xpLog: [],
