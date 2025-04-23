@@ -23,6 +23,20 @@ export const JournalList = () => {
     fetchEntries();
   }, [id]);
 
+  const handleReward = async (entryId, userId) => {
+    const xp = 10;
+    await axios.post("/api/xp", {
+      giverId: id,
+      receiverId: userId,
+      source: "journal",
+      sourceId: entryId,
+      amount: xp,
+      reason: "Great reflection",
+      timestamp: new Date().toISOString()
+    });
+    alert(`Rewarded ${xp} XP to ${userId}`);
+  };
+
   const filtered = entries.filter(entry => {
     return (selectedSub === "all" || entry.userId === selectedSub) &&
            (moods.length === 0 || moods.includes(entry.mood));
@@ -94,6 +108,13 @@ export const JournalList = () => {
               ))}
             </div>
           )}
+
+          <button
+            onClick={() => handleReward(entry.id, entry.userId)}
+            className="mt-2 text-sm text-purple-400 underline hover:text-purple-300"
+          >
+            Praise / Reward XP
+          </button>
         </div>
       ))}
     </div>
