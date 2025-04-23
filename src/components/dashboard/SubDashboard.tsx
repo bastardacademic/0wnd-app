@@ -3,6 +3,7 @@ import axios from "axios";
 import { useUser } from "../../context/UserContext";
 import { RitualCard } from "../rituals/RitualCard";
 import { DevotionMeter } from "../devotion/DevotionMeter";
+import { JournalEditor } from "../journal/JournalEditor";
 
 export const SubDashboard = () => {
   const { id } = useUser();
@@ -43,6 +44,11 @@ export const SubDashboard = () => {
             <RitualCard key={ritual.id} ritual={ritual} />
           ))}
         </div>
+      </section>
+
+      <section>
+        <h3 className="text-lg font-bold mb-2">Reflect & Log</h3>
+        <JournalEditor />
       </section>
     </div>
   );
