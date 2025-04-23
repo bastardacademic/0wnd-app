@@ -37,3 +37,21 @@ app.post("/api/favourites", (req, res) => {
   }
   res.status(201).json({ success: true });
 });
+
+// POST /api/assignPrompt
+app.post("/api/assignPrompt", (req, res) => {
+  const { subId, promptId } = req.body;
+  const existing = mockDb.promptAssignments.find(a => a.subId === subId);
+  if (existing) existing.promptId = promptId;
+  else mockDb.promptAssignments.push({ subId, promptId });
+  res.status(201).json({ success: true });
+});
+
+// GET /api/assignPrompt
+app.get("/api/assignPrompt", (req, res) => {
+  const userId = req.headers["x-user-id"];
+  const found = mockDb.promptAssignments.find(a => a.subId === userId);
+  if (!found) return res.status(204).send();
+  const prompt = mockDb.prompts.find(p => p.id === found.promptId);
+  res.json(prompt);
+});
