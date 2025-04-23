@@ -23,3 +23,15 @@ app.post("/api/promptResponses", (req, res) => {
 });
 
 export default app;
+
+// POST /api/audio
+app.post("/api/audio", (req, res) => {
+  const clip = {
+    id: Math.random().toString(36).slice(2),
+    unlocked: true,
+    unlockedAt: new Date().toISOString(),
+    ...req.body
+  };
+  mockDb.audioClips.push(clip);
+  res.status(201).json(clip);
+});
