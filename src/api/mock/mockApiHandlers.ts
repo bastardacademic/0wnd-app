@@ -57,3 +57,10 @@ app.post("/api/reflections", (req, res) => {
 
   res.status(201).json(entry);
 });
+
+// GET /api/reflections
+app.get("/api/reflections", (req, res) => {
+  const userId = req.headers["x-user-id"];
+  const data = mockDb.reflections.filter(r => r.userId === userId);
+  res.json(data);
+});
