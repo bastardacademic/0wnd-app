@@ -40,3 +40,20 @@ app.get("/api/rituals", (req, res) => {
     : mockDb.rituals.filter(r => r.subId === userId);
   res.json(data);
 });
+
+// POST /api/ritualSubmissions
+app.post("/api/ritualSubmissions", (req, res) => {
+  mockDb.ritualSubmissions.push(req.body);
+  mockDb.xpLog.push({
+    userId: req.body.userId,
+    source: "ritual",
+    sourceId: req.body.ritualId,
+    amount: 10,
+    reason: "Completed ritual",
+    timestamp: req.body.timestamp
+  });
+  const devotion = mockDb.devotion.find(d => d.userId === req.body.userId);
+  if (devotion) devotion.total += 10;
+  else mockDb.devotion.push({ userId: req.body.userId, total: 10 });
+  res.status(201).json({ success: true });
+});
