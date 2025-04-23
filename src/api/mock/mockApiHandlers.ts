@@ -57,3 +57,17 @@ app.post("/api/ritualSubmissions", (req, res) => {
   else mockDb.devotion.push({ userId: req.body.userId, total: 10 });
   res.status(201).json({ success: true });
 });
+
+// GET /api/ritualSubmissions
+app.get("/api/ritualSubmissions", (req, res) => {
+  const userId = req.headers["x-user-id"];
+  const subs = mockDb.users.filter(u => u.role === "sub" && u.domId === userId);
+  const subIds = subs.map(s => s.id);
+  const data = mockDb.ritualSubmissions.filter(r => r.userId === userId || subIds.includes(r.userId));
+  res.json(data);
+});
+
+// GET /api/ritualSubmissions/all
+app.get("/api/ritualSubmissions/all", (req, res) => {
+  res.json(mockDb.ritualSubmissions);
+});
