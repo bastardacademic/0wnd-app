@@ -6,5 +6,10 @@
   rituals: [],
   journals: [],
   devotion: [],
-  xpLog: []
+  xpLog: [],
+  prompts: [
+    { id: "p1", text: "Describe a moment you truly surrendered.", tags: ["surrender", "reflection"] },
+    { id: "p2", text: "What's a rule you want to break?", tags: ["rebel", "play"] }
+  ],
+  promptResponses: []
 };
