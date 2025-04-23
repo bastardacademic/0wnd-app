@@ -30,3 +30,15 @@ app.get("/api/rewards", (req, res) => {
   const unlocked = mockDb.rewards.filter(r => r.subId === userId);
   res.json(unlocked);
 });
+
+// GET /api/rewardLog
+app.get("/api/rewardLog", (req, res) => {
+  const userId = req.headers["x-user-id"];
+  const entries = mockDb.rewardLog
+    .filter(log => log.subId === userId)
+    .map(log => ({
+      ...log,
+      title: mockDb.rewards.find(r => r.id === log.rewardId)?.title || "[Unknown Reward]"
+    }));
+  res.json(entries);
+});
