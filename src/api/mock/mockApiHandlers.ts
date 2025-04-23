@@ -20,3 +20,20 @@ app.post("/api/xp", (req, res) => {
 });
 
 export default app;
+
+// GET /api/favourites
+app.get("/api/favourites", (req, res) => {
+  const userId = req.headers["x-user-id"];
+  const favs = mockDb.favourites.filter(f => f.userId === userId);
+  const prompts = favs.map(f => mockDb.prompts.find(p => p.id === f.promptId)).filter(Boolean);
+  res.json(prompts);
+});
+
+// POST /api/favourites
+app.post("/api/favourites", (req, res) => {
+  const { userId, promptId } = req.body;
+  if (!mockDb.favourites.find(f => f.userId === userId && f.promptId === promptId)) {
+    mockDb.favourites.push({ userId, promptId });
+  }
+  res.status(201).json({ success: true });
+});
