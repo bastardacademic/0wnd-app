@@ -1,0 +1,61 @@
+﻿import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useUser } from "../../context/UserContext";
+import { RitualCard } from "../rituals/RitualCard";
+
+export const DomDashboard = () => {
+  const { id } = useUser();
+  const [myRituals, setMyRituals] = useState([]);
+  const [subs, setSubs] = useState([]);
+
+  useEffect(() => {
+    async function fetchDomData() {
+      try {
+        const ritualsRes = await axios.get("/api/rituals/created", {
+          headers: { "x-user-id": id }
+        });
+        setMyRituals(ritualsRes.data);
+
+        const subsRes = await axios.get("/api/users/subs", {
+          headers: { "x-user-id": id }
+        });
+        setSubs(subsRes.data);
+      } catch (err) {
+        console.error("Error loading Dom Dashboard:", err);
+      }
+    }
+
+    fetchDomData();
+  }, [id]);
+
+  return (
+    <div className="space-y-6 p-4">
+      <h2 className="text-xl font-semibold">Dominant Control Panel</h2>
+
+      <section>
+        <h3 className="text-lg font-bold mb-2">Your Assigned Subs</h3>
+        <ul className="pl-4 list-disc text-sm">
+          {subs.map((sub) => (
+            <li key={sub.id}>{sub.displayName} ({sub.id})</li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-lg font-bold mb-2">Rituals You Created</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {myRituals.map((ritual) => (
+            <RitualCard key={ritual.id} ritual={ritual} />
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-lg font-bold mb-2">Create New Ritual</h3>
+        <button className="px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition">
+          Open Protocol Builder
+        </button>
+      </section>
+    </div>
+  );
+};
