@@ -35,3 +35,10 @@ app.post("/api/audio", (req, res) => {
   mockDb.audioClips.push(clip);
   res.status(201).json(clip);
 });
+
+// GET /api/audio
+app.get("/api/audio", (req, res) => {
+  const userId = req.headers["x-user-id"];
+  const unlocked = mockDb.audioClips.filter(c => !c.subId || c.subId === userId);
+  res.json(unlocked);
+});
