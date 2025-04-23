@@ -6,6 +6,8 @@
   rituals: [],
   journals: [],
   devotion: [],
+  rewards: [],
+  rewardLog: [],
   xpLog: [],
   prompts: [
     { id: "p1", text: "Describe a moment you truly surrendered.", tags: ["surrender", "reflection"] },

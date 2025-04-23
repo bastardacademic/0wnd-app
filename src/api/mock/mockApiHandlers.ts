@@ -23,3 +23,10 @@ app.post("/api/promptResponses", (req, res) => {
 });
 
 export default app;
+
+// GET /api/rewards
+app.get("/api/rewards", (req, res) => {
+  const userId = req.headers["x-user-id"];
+  const unlocked = mockDb.rewards.filter(r => r.subId === userId);
+  res.json(unlocked);
+});
