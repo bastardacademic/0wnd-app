@@ -58,3 +58,40 @@ app.post("/api/ritual-log", (req, res) => {
 
   res.status(201).json(entry);
 });
+
+// PATCH ritual-log to include action trigger
+function runLinkedAction(userId, actionId) {
+  const action = mockDb.actions.find(a => a.id === actionId);
+  if (!action) return;
+
+  if (action.type === "xp") {
+    mockDb.xpLog.push({
+      userId,
+      amount: action.amount,
+      reason: `🔗 Triggered Action – ${action.description}`,
+      source: "ritual-action",
+      sourceId: action.id,
+      timestamp: new Date().toISOString()
+    });
+
+    const devotion = mockDb.devotion.find(d => d.userId === userId);
+    if (devotion) {
+      devotion.total += action.amount;
+    } else {
+      mockDb.devotion.push({ userId, total: action.amount, level: 0, label: "✧ Curious" });
+    }
+  }
+
+  if (action.type === "message") {
+    console.log(`Message to ${userId}: ${action.message}`);
+    // Placeholder for future notification hook
+  }
+}
+
+// Extend POST /api/ritual-log
+const logged = mockDb.ritualLog.at(-1);
+const ritual = mockDb.rituals.find(r => r.id === logged.ritualId);
+if (ritual && ritual.rewards) {
+  const actionId = ritual.rewards[logged.status];
+  if (actionId) runLinkedAction(logged.userId, actionId);
+}
