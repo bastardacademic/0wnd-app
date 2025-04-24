@@ -23,3 +23,38 @@ app.post("/api/promptResponses", (req, res) => {
 });
 
 export default app;
+
+// POST /api/ritual-log
+app.post("/api/ritual-log", (req, res) => {
+  const { ritualId, userId, performedAt, status } = req.body;
+  const ritual = mockDb.rituals.find(r => r.id === ritualId);
+  if (!ritual) return res.status(404).json({ error: "Ritual not found" });
+
+  const entry = { id: crypto.randomUUID?.() || Math.random().toString(36).slice(2), ritualId, userId, performedAt, status };
+  mockDb.ritualLog.push(entry);
+
+  let xp = 0;
+  if (status === "active") xp = ritual.xpOnTime;
+  if (status === "overdue") xp = ritual.xpLate;
+  if (status === "missed") xp = -Math.abs(ritual.xpMissed || 0);
+
+  if (xp !== 0) {
+    mockDb.xpLog.push({
+      userId,
+      amount: xp,
+      reason: `⏰ Ritual ${status} – ${ritual.title}`,
+      source: "ritual",
+      sourceId: ritualId,
+      timestamp: performedAt
+    });
+
+    const devotion = mockDb.devotion.find(d => d.userId === userId);
+    if (devotion) {
+      devotion.total += xp;
+    } else {
+      mockDb.devotion.push({ userId, total: xp, level: 0, label: "✧ Curious" });
+    }
+  }
+
+  res.status(201).json(entry);
+});
