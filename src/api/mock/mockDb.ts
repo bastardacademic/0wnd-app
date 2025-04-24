@@ -3,7 +3,8 @@
     { id: "sub123", displayName: "Sub Test", role: "sub", domId: "dom456" },
     { id: "dom456", displayName: "Dom Test", role: "dom" }
   ],
-  rituals: [],
+  rituals: [
+    // { rewards: { onTime, late, missed } }],
   journals: [],
   devotion: [],
   xpLog: [],
@@ -13,3 +14,24 @@
   ],
   promptResponses: []
 };
+
+actions: [
+  {
+    id: "a1",
+    type: "xp",
+    amount: 5,
+    description: "+5 XP (Reward)"
+  },
+  {
+    id: "a2",
+    type: "xp",
+    amount: -3,
+    description: "-3 XP (Punishment)"
+  },
+  {
+    id: "a3",
+    type: "message",
+    message: "You disappointed your Dom today.",
+    description: "Warning Message"
+  }
+],
