@@ -3,7 +3,8 @@
     { id: "sub123", displayName: "Sub Test", role: "sub", domId: "dom456" },
     { id: "dom456", displayName: "Dom Test", role: "dom" }
   ],
-  rituals: [],
+  rituals: [
+    // { repeat, time, duration, xpOnTime, xpLate, xpMissed }],
   journals: [],
   devotion: [],
   xpLog: [],
