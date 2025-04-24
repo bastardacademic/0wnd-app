@@ -23,3 +23,12 @@ app.post("/api/promptResponses", (req, res) => {
 });
 
 export default app;
+
+// PATCH /api/user
+app.patch("/api/user", (req, res) => {
+  const userId = req.headers["x-user-id"];
+  const user = mockDb.users.find(u => u.id === userId);
+  if (!user) return res.status(404).json({ error: "User not found" });
+  Object.assign(user, req.body);
+  res.status(200).json(user);
+});
