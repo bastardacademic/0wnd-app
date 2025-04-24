@@ -5,7 +5,8 @@
   ],
   rituals: [],
   journals: [],
-  devotion: [],
+  devotion: [
+    // { userId, total, level, label, updatedAt }],
   rewards: [],
   rewardLog: [],
   xpLog: [],
