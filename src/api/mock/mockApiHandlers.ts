@@ -45,3 +45,17 @@ app.post("/api/burn", (req, res) => {
 
   res.status(404).json({ burned: false });
 });
+
+// POST /api/emergency-wipe
+app.post("/api/emergency-wipe", (req, res) => {
+  const { userId } = req.body;
+
+  mockDb.users = mockDb.users.filter(u => u.id !== userId);
+  mockDb.journals = mockDb.journals.filter(j => j.userId !== userId);
+  mockDb.ritualLog = mockDb.ritualLog.filter(r => r.userId !== userId);
+  mockDb.promptResponses = mockDb.promptResponses.filter(p => p.userId !== userId);
+  mockDb.devotion = mockDb.devotion.filter(d => d.userId !== userId);
+  mockDb.xpLog = mockDb.xpLog.filter(x => x.userId !== userId);
+
+  res.status(200).json({ success: true });
+});
