@@ -4,7 +4,8 @@
     { id: "dom456", displayName: "Dom Test", role: "dom" }
   ],
   rituals: [],
-  journals: [],
+  journals: [
+    // { burnOnView, viewed }],
   devotion: [],
   xpLog: [],
   prompts: [
@@ -13,3 +14,15 @@
   ],
   promptResponses: []
 };
+
+promptResponses: [
+    // { id, userId, promptId, content, burnOnView, viewed }
+],
+
+ritualLog: [
+    // { id, ritualId, userId, performedAt, status, burnOnView, viewed }
+],
+
+users: [
+    // { emergencyFlag }
+],
