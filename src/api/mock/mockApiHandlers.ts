@@ -23,3 +23,25 @@ app.post("/api/promptResponses", (req, res) => {
 });
 
 export default app;
+
+// POST /api/burn
+app.post("/api/burn", (req, res) => {
+  const { id, type } = req.body;
+
+  const collections = {
+    journal: mockDb.journals,
+    ritual: mockDb.ritualLog,
+    prompt: mockDb.promptResponses,
+  };
+
+  const collection = collections[type];
+  if (!collection) return res.status(400).json({ error: "Invalid type" });
+
+  const index = collection.findIndex(e => e.id === id);
+  if (index !== -1) {
+    collection.splice(index, 1);
+    return res.status(200).json({ burned: true });
+  }
+
+  res.status(404).json({ burned: false });
+});
