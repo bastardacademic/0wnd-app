@@ -23,3 +23,40 @@ app.post("/api/promptResponses", (req, res) => {
 });
 
 export default app;
+const speakeasy = require("speakeasy");
+const qrcode = require("qrcode");
+
+// POST /api/mfa/setup
+app.post("/api/mfa/setup", async (req, res) => {
+  const { userId } = req.body;
+  const user = mockDb.users.find(u => u.id === userId);
+  if (!user) return res.status(404).json({ error: "User not found" });
+
+  const secret = speakeasy.generateSecret({ length: 20 });
+  user.mfaSecret = secret.base32;
+
+  const otpAuthUrl = secret.otpauth_url;
+  const qr = await qrcode.toDataURL(otpAuthUrl);
+
+  res.json({ qr });
+});
+
+// POST /api/mfa/verify
+app.post("/api/mfa/verify", (req, res) => {
+  const { userId, code } = req.body;
+  const user = mockDb.users.find(u => u.id === userId);
+  if (!user) return res.status(404).json({ error: "User not found" });
+
+  const verified = speakeasy.totp.verify({
+    secret: user.mfaSecret,
+    encoding: "base32",
+    token: code
+  });
+
+  if (verified) {
+    user.mfaEnabled = true;
+    res.json({ success: true });
+  } else {
+    res.status(401).json({ success: false });
+  }
+});
