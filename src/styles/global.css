@@ -1,0 +1,36 @@
+﻿/* Global Mobile Tweaks */
+
+body {
+  @apply bg-neutral-950 text-white min-h-screen antialiased;
+}
+
+.container {
+  @apply px-4 md:px-6 lg:px-8;
+}
+
+button, input, select, textarea {
+  @apply rounded-md text-base min-h-[44px];
+}
+
+button:hover {
+  @apply brightness-110;
+}
+
+input:focus, select:focus, textarea:focus {
+  @apply outline-none ring-2 ring-purple-600;
+}
+
+.toast-success {
+  @apply bg-green-600 text-white font-semibold;
+}
+
+/* Animation for LevelBadge pulse */
+.animate-pulse-once {
+  animation: pulse 1s ease-in-out 1;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
