@@ -1,68 +1,56 @@
 ﻿import React, { useState } from "react";
-import axios from "axios";
-import { useUser } from "../../context/UserContext";
-import { TagSelector } from "../shared/TagSelector";
-import { IntensityToggle } from "../shared/IntensityToggle";
-import { ProofCheckboxGroup } from "../shared/ProofCheckboxGroup";
+import { createRitualTemplate } from "@/api/services/ritualService";
+import { applyReward } from "@/api/services/rewardService";
+import { awardXp } from "@/api/services/xpService";
 
-export const ProtocolBuilder = ({ onSubmitSuccess }) => {
-  const { id } = useUser();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
-  const [intensity, setIntensity] = useState("medium");
-  const [proof, setProof] = useState({ journal: false, photo: false, audio: false });
+export const ProtocolBuilder = () => {
+  const [ritual, setRitual] = useState({ name: "", description: "", rewards: {} });
 
-  const handleSubmit = async () => {
-    const payload = {
-      title,
-      description,
-      tags,
-      intensity,
-      proofRequired: proof,
-      isTemplate: true,
-      visibility: "private"
-    };
-
+  async function handleSave() {
     try {
-      await axios.post("/api/rituals", payload, {
-        headers: { "x-user-id": id }
+      const savedRitual = await createRitualTemplate(ritual);
+
+      // Simulate completion outcome (normally would come from user action later)
+      const outcome = "onTime"; // Placeholder: "onTime", "late", or "missed"
+      const rewardId = ritual.rewards?.[outcome];
+
+      if (rewardId) {
+        await applyReward(rewardId, "ritual", savedRitual.id);
+      }
+
+      await awardXp({
+        receiverId: savedRitual.userId,
+        amount: 15,
+        reason: `Ritual Completed (${outcome})`,
+        source: "ritual",
+        sourceId: savedRitual.id,
       });
-      onSubmitSuccess?.();
-      alert("Ritual created.");
+
+      alert("Ritual saved and outcome rewards triggered!");
     } catch (err) {
       console.error(err);
       alert("Failed to save ritual.");
     }
-  };
+  }
 
   return (
-    <div className="space-y-4 p-6 rounded-xl border bg-neutral-900">
-      <h3 className="text-xl font-bold text-white">Create Protocol</h3>
-
+    <div className="space-y-4">
+      <h2 className="text-2xl font-bold">Create a Ritual Protocol</h2>
       <input
         type="text"
-        className="w-full p-2 rounded bg-neutral-800 text-white"
-        placeholder="Ritual Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        value={ritual.name}
+        onChange={(e) => setRitual({ ...ritual, name: e.target.value })}
+        placeholder="Name your ritual..."
+        className="w-full p-2 rounded bg-neutral-800"
       />
-
       <textarea
-        className="w-full p-2 rounded bg-neutral-800 text-white"
+        value={ritual.description}
+        onChange={(e) => setRitual({ ...ritual, description: e.target.value })}
         placeholder="Describe the ritual..."
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        className="w-full p-2 rounded bg-neutral-800"
+        rows={4}
       />
-
-      <TagSelector selected={tags} onChange={setTags} />
-      <IntensityToggle selected={intensity} onChange={setIntensity} />
-      <ProofCheckboxGroup value={proof} onChange={setProof} />
-
-      <button
-        onClick={handleSubmit}
-        className="px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition"
-      >
+      <button onClick={handleSave} className="bg-indigo-700 hover:bg-indigo-600 py-2 px-4 rounded">
         Save Ritual
       </button>
     </div>

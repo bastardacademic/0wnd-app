@@ -1,31 +1,23 @@
-﻿import { mockDb } from "../utils/mockDb";
+﻿import { submitXpAward } from "@/api/services/xpService";
 
-export const ritualService = {
-  fetchAssigned: async (userId: string) => {
-    return mockDb.find("rituals", r => r.assignedTo === userId);
-  },
+export async function createRitualTemplate(ritual) {
+  const res = await fetch("/api/rituals", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(ritual),
+  });
 
-  fetchTemplates: async () => {
-    return mockDb.find("rituals", r => r.isTemplate && r.visibility === "community");
-  },
+  if (!res.ok) throw new Error("Failed to create ritual");
 
-  create: async (data, creatorId: string) => {
-    return mockDb.insert("rituals", {
-      ...data,
-      createdBy: creatorId,
-      createdAt: new Date().toISOString()
-    });
-  },
+  const savedRitual = await res.json();
 
-  complete: async (ritualId: string, userId: string) => {
-    return mockDb.update("rituals", ritualId, {
-      status: "completed",
-      completedBy: userId
-    });
-  },
+  await submitXpAward({
+    receiverId: ritual.userId,
+    amount: 10,
+    reason: "Ritual created",
+    source: "ritual",
+    sourceId: savedRitual.id
+  });
 
-  uploadProof: async (ritualId: string, files: any, userId: string) => {
-    const fakeUrl = "https://example.com/proof-" + Date.now();
-    return fakeUrl;
-  }
-};
+  return savedRitual;
+}

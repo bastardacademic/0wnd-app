@@ -1,25 +1,9 @@
 ﻿export const mockDb = {
-  users: [
-    { id: "sub123", displayName: "Sub Test", role: "sub", domId: "dom456" },
-    { id: "dom456", displayName: "Dom Test", role: "dom" }
-  ],
-  rituals: [],
-  journals: [],
-  devotion: [
-    // { userId, total, level, label }],
-  xpLog: [],
+  users: [],
   prompts: [
-    { id: "p1", text: "Describe a moment you truly surrendered.", tags: ["surrender", "reflection"] },
-    { id: "p2", text: "What's a rule you want to break?", tags: ["rebel", "play"] }
+    { id: "p1", text: "What made you feel most connected today?", tags: ["reflection", "connection"] },
+    { id: "p2", text: "Describe a moment you submitted fully.", tags: ["submission", "trust"] },
+    { id: "p3", text: "What desire feels strongest right now?", tags: ["desire", "introspection"] }
   ],
   promptResponses: []
 };
-
-devotionLevels: [
-  { level: 0, xp: 0, label: "✧ Curious" },
-  { level: 1, xp: 100, label: "★ Devoted" },
-  { level: 2, xp: 300, label: "★★ Obedient" },
-  { level: 3, xp: 600, label: "★★★ Enthralled" },
-  { level: 4, xp: 1000, label: "★★★★ Owned" },
-  { level: 5, xp: 1500, label: "★★★★★ Irrevocably Bound" }
-],
