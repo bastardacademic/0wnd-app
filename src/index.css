@@ -1,3 +1,15 @@
 ﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply bg-neutral-950 text-white antialiased;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: bold;
+}
