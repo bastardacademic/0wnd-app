@@ -1,35 +1,26 @@
-﻿import { rest } from "msw/browser";
-import { mockDb } from "./mockDb";
+import { http, HttpResponse } from 'msw'
+
+let journalEntries = []
+let prompts = [{ id: '1', text: 'What are you grateful for today?' }]
+let rituals = []
 
 export const handlers = [
-  rest.post("/api/journal", async (req, res, ctx) => {
-    const data = await req.json();
-    const id = Date.now();
-    mockDb.journalEntries.push({ id, ...data });
-    return res(ctx.status(201), ctx.json({ id, ...data }));
+  http.get('/api/prompts', () => {
+    return HttpResponse.json(prompts)
   }),
 
-  rest.post("/api/rituals", async (req, res, ctx) => {
-    const data = await req.json();
-    const id = Date.now();
-    mockDb.rituals.push({ id, ...data });
-    return res(ctx.status(201), ctx.json({ id, ...data }));
+  http.post('/api/journal', async (ctx) => {
+    const entry = await ctx.request.json()
+    journalEntries.push(entry)
+    return HttpResponse.json({ success: true, entry })
   }),
 
-  rest.get("/api/prompts", async (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(mockDb.prompts));
+  http.get('/api/scheduled-rituals', () => {
+    return HttpResponse.json(rituals)
   }),
 
-  rest.post("/api/prompts/:promptId/responses", async (req, res, ctx) => {
-    const { promptId } = req.params;
-    const data = await req.json();
-    mockDb.promptResponses.push({ id: Date.now(), promptId, ...data });
-    return res(ctx.status(201), ctx.json({ id: Date.now(), promptId, ...data }));
-  }),
-
-  rest.post("/api/xp", async (req, res, ctx) => {
-    const data = await req.json();
-    mockDb.xpAwards.push({ id: Date.now(), ...data });
-    return res(ctx.status(201), ctx.json({ id: Date.now(), ...data }));
+  http.post('/api/xp', async (ctx) => {
+    const data = await ctx.request.json()
+    return HttpResponse.json({ success: true, awarded: data.amount })
   })
-];
+]
