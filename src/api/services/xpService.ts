@@ -1,4 +1,4 @@
-﻿export async function submitXpAward(payload) {
+export async function submitXpAward(payload) {
   const res = await fetch("/api/xp", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

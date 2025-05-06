@@ -1,4 +1,4 @@
-﻿export async function fetchPrompts() {
+export async function fetchPrompts() {
   const res = await fetch("/api/prompts");
   if (!res.ok) throw new Error("Failed to fetch prompts");
   return await res.json();

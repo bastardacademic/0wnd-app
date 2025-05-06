@@ -1,4 +1,4 @@
-﻿import { submitXpAward } from "@/api/services/xpService";
+import { submitXpAward } from "@/api/services/xpService";
 
 export async function createJournalEntry(entry) {
   const res = await fetch("/api/journal", {

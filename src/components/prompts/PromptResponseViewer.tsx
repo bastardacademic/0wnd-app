@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { submitPromptResponse } from "@/api/services/promptService";
 
 export const PromptResponseViewer = ({ selectedPrompt }) => {
@@ -10,7 +10,7 @@ export const PromptResponseViewer = ({ selectedPrompt }) => {
     if (!selectedPrompt) return;
 
     if (!response.trim()) {
-      setMessage("❗ Please write a response first.");
+      setMessage("? Please write a response first.");
       return;
     }
 
@@ -18,10 +18,10 @@ export const PromptResponseViewer = ({ selectedPrompt }) => {
     try {
       await submitPromptResponse(selectedPrompt.id, response);
       setResponse("");
-      setMessage("✅ Response saved!");
+      setMessage("? Response saved!");
     } catch (error) {
       console.error(error);
-      setMessage("❌ Failed to save response.");
+      setMessage("? Failed to save response.");
     } finally {
       setSaving(false);
       setTimeout(() => setMessage(""), 3000);

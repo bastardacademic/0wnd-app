@@ -1,59 +1,50 @@
-﻿import { useState } from "react";
+import React, { useState } from "react";
 import { JournalEditor } from "@/components/journal/JournalEditor";
-import { ProtocolBuilder } from "@/components/rituals/ProtocolBuilder";
 import { PromptDrawer } from "@/components/prompts/PromptDrawer";
 import { PromptResponseViewer } from "@/components/prompts/PromptResponseViewer";
-import { DevotionLevelBadge } from "@/components/devotion/DevotionLevelBadge";
+import { RitualsScreen } from "@/components/rituals/RitualsScreen";
 import { SettingsScreen } from "@/components/settings/SettingsScreen";
+import { DevotionLevelBadge } from "@/components/devotion/DevotionLevelBadge";
 import { startMockApiServer } from "@/api/mock/mockApiServer";
 
 startMockApiServer();
 
-const tabs = [
-  { id: "journal", label: "Journal" },
-  { id: "rituals", label: "Rituals" },
-  { id: "prompts", label: "Prompts" },
-  { id: "profile", label: "Profile" },
-  { id: "settings", label: "Settings" },
-];
+const tabs = ["Journal", "Prompts", "Rituals", "Settings"];
 
-function App() {
-  const [tab, setTab] = useState("journal");
+export default function App() {
+  const [activeTab, setActiveTab] = useState("Journal");
   const [selectedPrompt, setSelectedPrompt] = useState(null);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col">
-      <div className="bg-gray-800 p-4 flex gap-2 justify-center">
-        {tabs.map((t) => (
+    <div className="min-h-screen bg-neutral-950 text-white p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">? 0wnd App ?</h1>
+        <DevotionLevelBadge level="Apprentice" />
+      </div>
+
+      <div className="flex space-x-4 mb-6">
+        {tabs.map((tab) => (
           <button
-            key={t.id}
-            className={`px-3 py-1 rounded ${tab === t.id ? "bg-gray-700" : "bg-gray-600 hover:bg-gray-500"}`}
-            onClick={() => setTab(t.id)}
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-4 py-2 rounded ${activeTab === tab ? "bg-green-700" : "bg-neutral-800 hover:bg-neutral-700"}`}
           >
-            {t.label}
+            {tab}
           </button>
         ))}
       </div>
 
-      <div className="flex-1 p-4 overflow-y-auto">
-        {tab === "journal" && <JournalEditor />}
-        {tab === "rituals" && <ProtocolBuilder />}
-        {tab === "prompts" && (
-          <div className="flex flex-col md:flex-row gap-4">
-            <PromptDrawer setSelectedPrompt={setSelectedPrompt} />
+      <div className="bg-neutral-900 p-6 rounded-lg shadow-md space-y-4">
+        {activeTab === "Journal" && <JournalEditor />}
+        {activeTab === "Prompts" && (
+          <div className="grid grid-cols-2 gap-6">
+            <PromptDrawer onSelect={setSelectedPrompt} />
             <PromptResponseViewer selectedPrompt={selectedPrompt} />
           </div>
         )}
-        {tab === "profile" && (
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">Your Profile</h2>
-            <DevotionLevelBadge devotionLevel={3} />
-          </div>
-        )}
-        {tab === "settings" && <SettingsScreen />}
+        {activeTab === "Rituals" && <RitualsScreen />}
+        {activeTab === "Settings" && <SettingsScreen />}
       </div>
     </div>
   );
 }
-
-export default App;

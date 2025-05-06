@@ -1,23 +1,24 @@
-﻿import { submitXpAward } from "@/api/services/xpService";
+export interface ScheduledRitual {
+  id?: string;
+  title: string;
+  date: string;
+  time?: string;
+  repeat?: string;
+}
 
-export async function createRitualTemplate(ritual) {
-  const res = await fetch("/api/rituals", {
+export async function fetchScheduledRituals(): Promise<ScheduledRitual[]> {
+  const res = await fetch("/api/rituals/scheduled");
+  if (!res.ok) throw new Error("Failed to fetch scheduled rituals");
+  return res.json();
+}
+
+export async function saveScheduledRitual(ritual: ScheduledRitual): Promise<ScheduledRitual> {
+  const res = await fetch("/api/rituals/scheduled", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(ritual),
+    body: JSON.stringify(ritual)
   });
 
-  if (!res.ok) throw new Error("Failed to create ritual");
-
-  const savedRitual = await res.json();
-
-  await submitXpAward({
-    receiverId: ritual.userId,
-    amount: 10,
-    reason: "Ritual created",
-    source: "ritual",
-    sourceId: savedRitual.id
-  });
-
-  return savedRitual;
+  if (!res.ok) throw new Error("Failed to save ritual");
+  return res.json();
 }

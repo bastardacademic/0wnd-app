@@ -1,4 +1,4 @@
-﻿export async function applyReward(actionId: string, type: "reward" | "punishment", userId: string) {
+export async function applyReward(actionId: string, type: "reward" | "punishment", userId: string) {
   const res = await fetch("/api/rewards/apply", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

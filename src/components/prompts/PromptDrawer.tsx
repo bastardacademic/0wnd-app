@@ -1,39 +1,47 @@
-﻿import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchPrompts } from "@/api/services/promptService";
 
-export const PromptDrawer = ({ setSelectedPrompt }) => {
+export const PromptDrawer = ({ onSelectPrompt }) => {
   const [prompts, setPrompts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
-  useState(() => {
-    async function load() {
+  useEffect(() => {
+    async function loadPrompts() {
       try {
         const data = await fetchPrompts();
         setPrompts(data);
-      } catch {
-        setError("❌ Failed to load prompts.");
+      } catch (error) {
+        console.error("Failed to fetch prompts", error);
       } finally {
         setLoading(false);
       }
     }
-    load();
+    loadPrompts();
   }, []);
 
-  if (loading) return <div>Loading prompts...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) {
+    return <div className="text-center py-10 text-gray-400">Loading prompts...</div>;
+  }
 
   return (
-    <div className="space-y-2">
-      {prompts.map(prompt => (
-        <button
-          key={prompt.id}
-          onClick={() => setSelectedPrompt(prompt)}
-          className="w-full text-left p-3 rounded hover:bg-neutral-700 bg-neutral-800"
-        >
-          {prompt.text}
-        </button>
-      ))}
+    <div className="p-6 space-y-4">
+      <h2 className="text-2xl font-bold text-center">Select a Prompt</h2>
+      <ul className="space-y-2">
+        {Array.isArray(prompts) && prompts.length > 0 ? (
+          prompts.map((prompt) => (
+            <li key={prompt.id}>
+              <button
+                onClick={() => onSelectPrompt(prompt)}
+                className="w-full bg-neutral-700 hover:bg-neutral-600 text-white rounded p-3 text-left transition-colors"
+              >
+                {prompt.text}
+              </button>
+            </li>
+          ))
+        ) : (
+          <li className="text-center text-gray-400">No prompts available.</li>
+        )}
+      </ul>
     </div>
   );
 };
