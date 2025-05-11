@@ -1,31 +1,24 @@
-﻿import { mockDb } from "../utils/mockDb";
+export interface ScheduledRitual {
+  id?: string;
+  title: string;
+  date: string;
+  time?: string;
+  repeat?: string;
+}
 
-export const ritualService = {
-  fetchAssigned: async (userId: string) => {
-    return mockDb.find("rituals", r => r.assignedTo === userId);
-  },
+export async function fetchScheduledRituals(): Promise<ScheduledRitual[]> {
+  const res = await fetch("/api/rituals/scheduled");
+  if (!res.ok) throw new Error("Failed to fetch scheduled rituals");
+  return res.json();
+}
 
-  fetchTemplates: async () => {
-    return mockDb.find("rituals", r => r.isTemplate && r.visibility === "community");
-  },
+export async function saveScheduledRitual(ritual: ScheduledRitual): Promise<ScheduledRitual> {
+  const res = await fetch("/api/rituals/scheduled", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(ritual)
+  });
 
-  create: async (data, creatorId: string) => {
-    return mockDb.insert("rituals", {
-      ...data,
-      createdBy: creatorId,
-      createdAt: new Date().toISOString()
-    });
-  },
-
-  complete: async (ritualId: string, userId: string) => {
-    return mockDb.update("rituals", ritualId, {
-      status: "completed",
-      completedBy: userId
-    });
-  },
-
-  uploadProof: async (ritualId: string, files: any, userId: string) => {
-    const fakeUrl = "https://example.com/proof-" + Date.now();
-    return fakeUrl;
-  }
-};
+  if (!res.ok) throw new Error("Failed to save ritual");
+  return res.json();
+}

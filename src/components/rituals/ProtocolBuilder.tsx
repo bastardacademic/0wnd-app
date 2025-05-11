@@ -1,70 +1,75 @@
-﻿import React, { useState } from "react";
-import axios from "axios";
-import { useUser } from "../../context/UserContext";
-import { TagSelector } from "../shared/TagSelector";
-import { IntensityToggle } from "../shared/IntensityToggle";
-import { ProofCheckboxGroup } from "../shared/ProofCheckboxGroup";
+﻿import { useState } from "react";
+import { createRitualTemplate } from "@/api/services/ritualService";
+import { OutcomeEditor } from "./OutcomeEditor";
 
-export const ProtocolBuilder = ({ onSubmitSuccess }) => {
-  const { id } = useUser();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
-  const [intensity, setIntensity] = useState("medium");
-  const [proof, setProof] = useState({ journal: false, photo: false, audio: false });
+export const ProtocolBuilder = () => {
+  const [ritual, setRitual] = useState({
+    name: "",
+    description: "",
+    rewards: {},
+    userId: "me",
+  });
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = async () => {
-    const payload = {
-      title,
-      description,
-      tags,
-      intensity,
-      proofRequired: proof,
-      isTemplate: true,
-      visibility: "private"
-    };
-
-    try {
-      await axios.post("/api/rituals", payload, {
-        headers: { "x-user-id": id }
-      });
-      onSubmitSuccess?.();
-      alert("Ritual created.");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to save ritual.");
+  async function handleSave() {
+    if (!ritual.name.trim()) {
+      setMessage("❗ Ritual must have a name.");
+      return;
     }
-  };
+
+    setSaving(true);
+    try {
+      await createRitualTemplate(ritual);
+      setRitual({ name: "", description: "", rewards: {}, userId: "me" });
+      setMessage("✅ Ritual saved!");
+    } catch (error) {
+      console.error(error);
+      setMessage("❌ Failed to save ritual.");
+    } finally {
+      setSaving(false);
+      setTimeout(() => setMessage(""), 3000);
+    }
+  }
 
   return (
-    <div className="space-y-4 p-6 rounded-xl border bg-neutral-900">
-      <h3 className="text-xl font-bold text-white">Create Protocol</h3>
-
+    <div className="space-y-4">
       <input
-        type="text"
-        className="w-full p-2 rounded bg-neutral-800 text-white"
-        placeholder="Ritual Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        value={ritual.name}
+        onChange={(e) => setRitual({ ...ritual, name: e.target.value })}
+        placeholder="Ritual Name"
+        className="w-full p-3 rounded bg-neutral-800"
       />
-
       <textarea
-        className="w-full p-2 rounded bg-neutral-800 text-white"
-        placeholder="Describe the ritual..."
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        value={ritual.description}
+        onChange={(e) => setRitual({ ...ritual, description: e.target.value })}
+        placeholder="Description"
+        rows={4}
+        className="w-full p-3 rounded bg-neutral-800 resize-none"
       />
 
-      <TagSelector selected={tags} onChange={setTags} />
-      <IntensityToggle selected={intensity} onChange={setIntensity} />
-      <ProofCheckboxGroup value={proof} onChange={setProof} />
+      <OutcomeEditor
+        config={ritual}
+        setConfig={setRitual}
+        actionOptions={[
+          { id: "reward1", description: "Celebrate" },
+          { id: "reward2", description: "Extra Privilege" },
+          { id: "punishment1", description: "Extra Task" },
+          { id: "punishment2", description: "Timeout" },
+        ]}
+      />
 
-      <button
-        onClick={handleSubmit}
-        className="px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition"
-      >
-        Save Ritual
-      </button>
+      <div className="flex items-center gap-4">
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className="bg-green-600 hover:bg-green-500 px-6 py-2 rounded disabled:opacity-50"
+        >
+          {saving ? "Saving..." : "Save Ritual"}
+        </button>
+
+        {message && <span className="text-sm">{message}</span>}
+      </div>
     </div>
   );
 };

@@ -1,25 +1,26 @@
-﻿import express from "express";
-import { mockDb } from "./mockDb";
+import { http, HttpResponse } from 'msw'
 
-const app = express();
-app.use(express.json());
+let journalEntries = []
+let prompts = [{ id: '1', text: 'What are you grateful for today?' }]
+let rituals = []
 
-// GET /api/prompts
-app.get("/api/prompts", (req, res) => {
-  res.json(mockDb.prompts);
-});
+export const handlers = [
+  http.get('/api/prompts', () => {
+    return HttpResponse.json(prompts)
+  }),
 
-// POST /api/prompts
-app.post("/api/prompts", (req, res) => {
-  const prompt = { id: Math.random().toString(36).substring(2), ...req.body };
-  mockDb.prompts.push(prompt);
-  res.status(201).json(prompt);
-});
+  http.post('/api/journal', async (ctx) => {
+    const entry = await ctx.request.json()
+    journalEntries.push(entry)
+    return HttpResponse.json({ success: true, entry })
+  }),
 
-// POST /api/promptResponses
-app.post("/api/promptResponses", (req, res) => {
-  mockDb.promptResponses.push(req.body);
-  res.status(201).json({ success: true });
-});
+  http.get('/api/scheduled-rituals', () => {
+    return HttpResponse.json(rituals)
+  }),
 
-export default app;
+  http.post('/api/xp', async (ctx) => {
+    const data = await ctx.request.json()
+    return HttpResponse.json({ success: true, awarded: data.amount })
+  })
+]
