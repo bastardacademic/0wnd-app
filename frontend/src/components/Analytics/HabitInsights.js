@@ -1,3 +1,0 @@
-import React, { useState, useEffect } from 'react';
-// Insights code...
-export default HabitInsights;
