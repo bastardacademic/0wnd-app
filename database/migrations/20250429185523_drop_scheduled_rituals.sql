@@ -1,2 +1,2 @@
-﻿-- Drop Scheduled Rituals Table
+-- Drop Scheduled Rituals Table
 DROP TABLE IF EXISTS scheduled_rituals;

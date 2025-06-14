@@ -1,4 +1,4 @@
-﻿-- Migration: Add reward, punishment, and deadline columns to tasks
+-- Migration: Add reward, punishment, and deadline columns to tasks
 ALTER TABLE tasks
 ADD COLUMN reward TEXT;
 

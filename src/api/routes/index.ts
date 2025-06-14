@@ -1,4 +1,4 @@
-﻿import { handleJournalPost } from '../handlers/journalHandler';
+import { handleJournalPost } from '../handlers/journalHandler';
 
 export const routes = [
   {

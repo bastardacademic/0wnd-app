@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 
 export const OutcomeEditor = ({ config, setConfig, actionOptions }) => (
   <div className="space-y-2 text-white">

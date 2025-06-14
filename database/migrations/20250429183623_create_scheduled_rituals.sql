@@ -1,4 +1,4 @@
-﻿-- Scheduled Rituals Table
+-- Scheduled Rituals Table
 CREATE TABLE scheduled_rituals (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     ritual_id UUID NOT NULL REFERENCES rituals(id) ON DELETE CASCADE,

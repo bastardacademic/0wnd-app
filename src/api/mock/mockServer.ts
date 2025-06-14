@@ -1,4 +1,4 @@
-﻿import express from "express";
+import express from "express";
 import { mockApiHandlers } from "./mockApiHandlers";
 
 export function startMockServer() {

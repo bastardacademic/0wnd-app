@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { createJournalEntry } from "@/api/services/journalService";
 
 export const JournalEditor = () => {
