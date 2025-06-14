@@ -1,4 +1,4 @@
-﻿export const mockDb = {
+export const mockDb = {
   journals: [],
   xp: [],
 };

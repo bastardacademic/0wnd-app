@@ -1,4 +1,4 @@
-﻿import { mockDb } from "../mock/mockDb";
+import { mockDb } from "../mock/mockDb";
 
 export function updateDevotionLevel(userId: string) {
   const devotion = mockDb.devotion.find(d => d.userId === userId);

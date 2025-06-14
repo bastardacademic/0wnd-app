@@ -1,4 +1,4 @@
-﻿// src/api/mock/mockApiServer.ts
+// src/api/mock/mockApiServer.ts
 import { setupWorker } from 'msw/browser';
 import { handlers } from './mockApiHandlers';
 

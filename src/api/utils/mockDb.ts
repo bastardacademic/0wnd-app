@@ -1,4 +1,4 @@
-﻿type Table = Record<string, any>[];
+type Table = Record<string, any>[];
 
 const db = {
   rituals: [] as Table,

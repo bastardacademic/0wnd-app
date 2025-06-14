@@ -1,1 +1,1 @@
-﻿export { rest, setupWorker } from "https://esm.sh/msw@1.2.1";
+export { rest, setupWorker } from "https://esm.sh/msw@1.2.1";

@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { createRitualTemplate } from "@/api/services/ritualService";
 import { OutcomeEditor } from "./OutcomeEditor";
 
