@@ -5,9 +5,6 @@ import { PromptResponseViewer } from "@/components/prompts/PromptResponseViewer"
 import { RitualsScreen } from "@/components/rituals/RitualsScreen";
 import { SettingsScreen } from "@/components/settings/SettingsScreen";
 import { DevotionLevelBadge } from "@/components/devotion/DevotionLevelBadge";
-import { startMockApiServer } from "@/api/mock/mockApiServer";
-
-startMockApiServer();
 
 const tabs = ["Journal", "Prompts", "Rituals", "Settings"];
 
