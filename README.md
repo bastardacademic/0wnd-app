@@ -13,3 +13,7 @@ A secure habit-tracking, journaling, and messaging app with gamification element
 - **Backend**: Node.js, Express, MongoDB
 - **Frontend**: React.js, Redux, CSS
 - **Security**: End-to-End Encryption, JWT Auth
+
+## Setup
+Run `npm ci` to install dependencies. This command requires internet access to
+download packages and will fail in offline environments.
