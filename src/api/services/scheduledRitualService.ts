@@ -1,20 +1,31 @@
-export async function createScheduledRitual(data) {
-  const res = await fetch("/api/scheduled-rituals", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+// src/api/services/scheduledRitualsService.ts
+interface ScheduledRitual {
+  id: string;
+  name: string;
+  description: string;
+  scheduledFor: string;
+  status: "pending" | "completed" | "missed";
+}
+
+let scheduledRituals: ScheduledRitual[] = [];
+
+export async function getScheduledRituals(): Promise<ScheduledRitual[]> {
+  return scheduledRituals;
+}
+
+export async function createScheduledRitual(ritual: Omit<ScheduledRitual, "id" | "status">): Promise<void> {
+  scheduledRituals.push({
+    ...ritual,
+    id: crypto.randomUUID(),
+    status: "pending"
   });
-  if (!res.ok) throw new Error("Failed to create scheduled ritual");
-  return res.json();
 }
 
-export async function fetchScheduledRituals() {
-  const res = await fetch("/api/scheduled-rituals");
-  if (!res.ok) throw new Error("Failed to fetch scheduled rituals");
-  return res.json();
+export async function updateScheduledRitualStatus(id: string, status: "completed" | "missed"): Promise<void> {
+  const ritual = scheduledRituals.find(r => r.id === id);
+  if (ritual) ritual.status = status;
 }
 
-export async function deleteScheduledRitual(id) {
-  const res = await fetch(`/api/scheduled-rituals/${id}`, { method: "DELETE" });
-  if (!res.ok) throw new Error("Failed to delete scheduled ritual");
+export async function deleteScheduledRitual(id: string): Promise<void> {
+  scheduledRituals = scheduledRituals.filter(r => r.id !== id);
 }

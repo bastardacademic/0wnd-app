@@ -1,23 +1,18 @@
-import { submitXpAward } from "@/api/services/xpService";
+// File: src/api/services/journalService.ts
+import axios from 'axios';
+import * as mockApi from '../stubs/mockApi';
+import type { JournalEntry } from './types';
 
-export async function createJournalEntry(entry) {
-  const res = await fetch("/api/journal", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(entry),
-  });
+export async function getJournalEntries(): Promise<JournalEntry[]> {
+  return process.env.NODE_ENV === 'development'
+    ? mockApi.fetchJournalEntries()
+    : (await axios.get<JournalEntry[]>(`${import.meta.env.VITE_API_URL}/journal`)).data;
+}
 
-  if (!res.ok) throw new Error("Failed to create journal entry");
-
-  const savedEntry = await res.json();
-
-  await submitXpAward({
-    receiverId: entry.userId,
-    amount: 5,
-    reason: "Journal entry completed",
-    source: "journal",
-    sourceId: savedEntry.id
-  });
-
-  return savedEntry;
+export async function createJournalEntry(
+  entry: Omit<JournalEntry, 'id' | 'createdAt'>
+): Promise<JournalEntry> {
+  return process.env.NODE_ENV === 'development'
+    ? mockApi.postJournalEntry(entry)
+    : (await axios.post<JournalEntry>(`${import.meta.env.VITE_API_URL}/journal`, entry)).data;
 }
