@@ -1,0 +1,8 @@
+[
+  {
+    "id": "ritual-1",
+    "name": "Morning Check-In",
+    "description": "Daily mindfulness ritual",
+    "outcomes": { "onTime": {}, "late": {}, "missed": {} }
+  }
+]
