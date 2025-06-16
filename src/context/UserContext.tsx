@@ -12,11 +12,15 @@ const defaultUser: User = {
   displayName: "Sub Test"
 };
 
-const UserContext = createContext<User>(defaultUser);
+export const UserContext = createContext<{
+  user?: User;
+  setUser: (u?: User) => void;
+}>({ setUser: () => {} });
 
-export const UserProvider = ({ children }) => {
+export const UserProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User>();
   return (
-    <UserContext.Provider value={defaultUser}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );

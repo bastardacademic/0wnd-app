@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '@/context/AuthContext';
+import { getXP } from '@/api/services/xpService';
 
-export function DevotionLevelBadge({ xp }: { xp: number }) {
-  let level = "Newcomer";
+export const DevotionLevelBadge: React.FC = () => {
+  const { user } = useContext(AuthContext);
+  const [xpData, setXpData] = useState<{ level: number; currentXP: number; nextLevelXP: number }>({ level: 1, currentXP: 0, nextLevelXP: 100 });
 
-  if (xp >= 1000) level = "Master";
-  else if (xp >= 500) level = "Veteran";
-  else if (xp >= 250) level = "Experienced";
-  else if (xp >= 100) level = "Initiate";
+  useEffect(() => {
+    if (user) {
+      getXP().then(setXpData);
+    }
+  }, [user]);
 
   return (
-    <div className="inline-block px-4 py-2 rounded-full bg-purple-700 text-white font-bold">
-      {level}
+    <div className="p-2 bg-yellow-300 rounded-full text-black inline-block">
+      Lv {xpData.level} • {xpData.currentXP}/{xpData.nextLevelXP} XP
     </div>
   );
-}
+};

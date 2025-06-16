@@ -1,30 +1,20 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '@/context/AuthContext';
+import { getXP } from '@/api/services/xpService';
 
-export const SettingsScreen = () => {
+export const DevotionLevelBadge: React.FC = () => {
+  const { user } = useContext(AuthContext);
+  const [xpData, setXpData] = useState<{ level: number; currentXP: number; nextLevelXP: number }>({ level: 1, currentXP: 0, nextLevelXP: 100 });
+
+  useEffect(() => {
+    if (user) {
+      getXP().then(setXpData);
+    }
+  }, [user]);
+
   return (
-    <div className="p-6 text-white max-w-2xl mx-auto space-y-6">
-      <h1 className="text-3xl font-bold mb-4">?? Settings</h1>
-
-      <section className="bg-neutral-800 p-4 rounded space-y-2">
-        <h2 className="text-xl font-semibold">App Preferences</h2>
-        <div className="text-neutral-400 text-sm">
-          (Coming soon: dark mode settings, notification controls, security settings...)
-        </div>
-      </section>
-
-      <section className="bg-neutral-800 p-4 rounded space-y-2">
-        <h2 className="text-xl font-semibold">Security</h2>
-        <div className="text-neutral-400 text-sm">
-          (Coming soon: 2FA setup, backup codes, emergency data deletion...)
-        </div>
-      </section>
-
-      <section className="bg-neutral-800 p-4 rounded space-y-2">
-        <h2 className="text-xl font-semibold">About</h2>
-        <p className="text-neutral-400 text-sm">
-          Version 0.1.0 Beta — built for habit growth, devotion, and transformation.
-        </p>
-      </section>
+    <div className="p-2 bg-yellow-300 rounded-full text-black inline-block">
+      Lv {xpData.level} • {xpData.currentXP}/{xpData.nextLevelXP} XP
     </div>
   );
 };
