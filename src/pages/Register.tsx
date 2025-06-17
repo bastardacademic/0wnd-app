@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 const Register: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState<'Dom' | 'Sub'>('Sub');
+  const [role, setRole] = useState<'Dom' | 'Sub' | 'Switch'>('Sub');
   const [error, setError] = useState<string | null>(null);
   const { register } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -43,11 +43,12 @@ const Register: React.FC = () => {
         />
         <select
           value={role}
-          onChange={e => setRole(e.target.value as 'Dom' | 'Sub')}
+          onChange={e => setRole(e.target.value as 'Dom' | 'Sub' | 'Switch')}
           className="w-full mb-4 p-2 rounded bg-gray-700 text-white focus:outline-none"
         >
           <option value="Dom">Dom</option>
           <option value="Sub">Sub</option>
+          <option value="Switch">Switch</option>
         </select>
         <button
           type="submit"

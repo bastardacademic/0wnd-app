@@ -1,18 +1,20 @@
 // File: backend/src/routes/xp.ts
 import { Router } from 'express';
 import XP from '../models/XP';
+import { authenticateToken, authorizeRole, AuthRequest } from '../middleware/auth';
 
 const router = Router();
+router.use(authenticateToken);
 
-// GET /api/xp?userId=
-router.get('/', async (req, res) => {
+// GET /api/xp => all authenticated users
+router.get('/', async (req: AuthRequest, res) => {
   const { userId } = req.query;
   const xp = await XP.findOne({ user: userId });
   res.json(xp);
 });
 
-// POST /api/xp
-router.post('/', async (req, res) => {
+// POST /api/xp => only Dom or Switch can award XP
+router.post('/', authorizeRole('Dom', 'Switch'), async (req, res) => {
   const { userId, amount } = req.body;
   let xp = await XP.findOne({ user: userId });
   if (!xp) xp = new XP({ user: userId });

@@ -2,14 +2,26 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import { getRitualTemplates, createRitualTemplate, completeRitual } from '@/api/services/ritualService';
 import { RitualTemplate } from '@/api/services/types';
+import { EditRitualTemplateModal } from '@/components/rituals/EditRitualTemplateModal';
 
 export const RitualsScreen: React.FC = () => {
   const { user } = useContext(AuthContext);
+  const isController = user?.role === 'Dom' || user?.role === 'Switch';
+{isController && <button>Edit</button>}
   const [rituals, setRituals] = useState<RitualTemplate[]>([]);
 
   useEffect(() => {
     getRitualTemplates().then(setRituals);
   }, []);
+
+  <EditRitualTemplateModal
+  isOpen={isEditOpen}
+  template={selectedTemplate}
+  onClose={() => setEditOpen(false)}
+  onSave={updated => {
+    // update local state list
+  }}
+/>
 
   return (
     <div>

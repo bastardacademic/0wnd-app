@@ -9,6 +9,7 @@ import scheduleRoutes from './routes/schedules';
 import xpRoutes from './routes/xp';
 import journalRoutes from './routes/journal';
 import { authenticateToken } from './middleware/auth';
+import userRoutes from './routes/user';
 
 dotenv.config();
 const app = express();
@@ -29,6 +30,7 @@ app.use('/api/rituals', authenticateToken, ritualRoutes);
 app.use('/api/schedules', authenticateToken, scheduleRoutes);
 app.use('/api/xp', authenticateToken, xpRoutes);
 app.use('/api/journal', authenticateToken, journalRoutes);
+app.use('/api/user', userRoutes)
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

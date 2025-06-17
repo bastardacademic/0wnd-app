@@ -3,7 +3,7 @@ import api from '@/api/axios';
 
 export interface AuthUser {
   id: string;
-  role: 'Dom' | 'Sub';
+  role: 'Dom' | 'Sub'| 'Switch';
   username: string;
 }
 
@@ -11,7 +11,7 @@ interface AuthContextType {
   user: AuthUser | null;
   token: string | null;
   login: (username: string, password: string) => Promise<void>;
-  register: (username: string, password: string, role: 'Dom' | 'Sub') => Promise<void>;
+  register: (username: string, password: string, role: 'Dom' | 'Sub'| 'Switch') => Promise<void>;
   logout: () => void;
 }
 
@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(me.data);
   };
 
-  const register = async (username: string, password: string, role: 'Dom' | 'Sub') => {
+  const register = async (username: string, password: string, role: 'Dom' | 'Sub'| 'Switch') => {
     await api.post('/auth/register', { username, password, role });
   };
 

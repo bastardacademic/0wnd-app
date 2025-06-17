@@ -17,6 +17,9 @@ export const Layout: React.FC = () => {
 
   // Build final tabs list based on role
   const tabs = user?.role === 'Dom' ? [...baseTabs, ...domTabs] : baseTabs;
+  if (user?.role === 'Dom' || user?.role === 'Switch') {
+  tabs.push({ path: '/purge-requests', label: 'Purge Requests' });
+}
 
   return (
     <div className="min-h-screen flex bg-gray-100 dark:bg-gray-900">

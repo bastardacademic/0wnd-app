@@ -1,9 +1,9 @@
-// File: backend/src/routes/auth.ts
 import { Router } from 'express';
 import User from '../models/User';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { authenticateToken, AuthRequest } from '../middleware/auth';
 
 dotenv.config();
 const router = Router();
@@ -26,11 +26,20 @@ router.post('/login', async (req, res) => {
   if (!match) return res.status(400).json({ message: 'Invalid credentials' });
 
   const token = jwt.sign(
-    { id: user._id, role: user.role },
+    { id: user._id, role: user.role, username: user.username },
     process.env.JWT_SECRET as string,
     { expiresIn: '8h' }
   );
   res.json({ token });
+});
+
+// GET /api/auth/me (protected)
+router.get('/me', authenticateToken, async (req: AuthRequest, res) => {
+  const userId = req.user?.id;
+  if (!userId) return res.sendStatus(401);
+  const user = await User.findById(userId).select('-password');
+  if (!user) return res.sendStatus(404);
+  res.json({ id: user._id, username: user.username, role: user.role });
 });
 
 export default router;
