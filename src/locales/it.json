@@ -1,0 +1,50 @@
+// File: src/locales/it.json
+{
+  "app": { "name": "App delle Abitudini 0wnd" },
+  "navigation": { "main": "Navigazione principale" },
+  "tabs": {
+    "journal": "Diario",
+    "prompts": "Suggerimenti",
+    "rituals": "Rituali",
+    "settings": "Impostazioni",
+    "analytics": "Analisi",
+    "purge-requests": "Richieste di Cancellazione"
+  },
+  "rituals": {
+    "title": "Modelli di Rituali",
+    "new": "Crea nuovo rituale",
+    "edit": "Modifica rituale",
+    "delete": "Elimina rituale"
+  },
+  "buttons": {
+    "newRitual": "Nuovo Modello di Rituale",
+    "edit": "Modifica",
+    "delete": "Elimina",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "exportData": "Esporta i miei dati",
+    "emailMe": "Invia via email",
+    "requestPurge": "Richiedi cancellazione dati",
+    "emergencyPurge": "Cancellazione di emergenza",
+    "restore": "Ripristina dati",
+    "logout": "Logout"
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "username": "Nome utente",
+    "role": "Ruolo",
+    "exportOptions": "Opzioni di esportazione",
+    "rituals": "Modelli di Rituali",
+    "schedules": "Programmazioni",
+    "journals": "Voci di diario",
+    "xp": "Stato XP",
+    "format": "Formato"
+  },
+  "notifications": {
+    "exportReady": "Esportazione pronta!",
+    "purgeRequested": "Richiesta di cancellazione inviata"
+  },
+  "errors": {
+    "unexpected": "Si è verificato un errore imprevisto."
+  }
+}

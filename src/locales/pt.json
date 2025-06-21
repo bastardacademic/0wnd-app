@@ -1,0 +1,50 @@
+// File: src/locales/pt.json
+{
+  "app": { "name": "App de Hábitos 0wnd" },
+  "navigation": { "main": "Navegação principal" },
+  "tabs": {
+    "journal": "Diário",
+    "prompts": "Sugestões",
+    "rituals": "Rituais",
+    "settings": "Configurações",
+    "analytics": "Análise",
+    "purge-requests": "Solicitações de Exclusão"
+  },
+  "rituals": {
+    "title": "Modelos de Rituais",
+    "new": "Criar novo ritual",
+    "edit": "Editar ritual",
+    "delete": "Excluir ritual"
+  },
+  "buttons": {
+    "newRitual": "Novo Modelo de Ritual",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "exportData": "Exportar meus dados",
+    "emailMe": "Enviar por e-mail",
+    "requestPurge": "Solicitar exclusão de dados",
+    "emergencyPurge": "Exclusão de emergência",
+    "restore": "Restaurar dados",
+    "logout": "Sair"
+  },
+  "settings": {
+    "title": "Configurações",
+    "username": "Nome de usuário",
+    "role": "Função",
+    "exportOptions": "Opções de exportação",
+    "rituals": "Modelos de Rituais",
+    "schedules": "Agendamentos",
+    "journals": "Entradas do diário",
+    "xp": "Status do XP",
+    "format": "Formato"
+  },
+  "notifications": {
+    "exportReady": "Exportação pronta!",
+    "purgeRequested": "Solicitação de exclusão enviada"
+  },
+  "errors": {
+    "unexpected": "Ocorreu um erro inesperado."
+  }
+}

@@ -1,0 +1,51 @@
+// File: src/locales/da.json
+{
+  "app": { "name": "0wnd Vanesporingsapp" },
+  "navigation": { "main": "Hovednavigation" },
+  "tabs": {
+    "journal": "Dagbog",
+    "prompts": "Prompter",
+    "rituals": "Ritualer",
+    "settings": "Indstillinger",
+    "analytics": "Analyse",
+    "purge-requests": "Rensningsanmodninger"
+  },
+  "rituals": {
+    "title": "Ritualskabeloner",
+    "new": "Opret nyt ritual",
+    "edit": "Rediger ritual",
+    "delete": "Slet ritual"
+  },
+  "buttons": {
+    "newRitual": "Ny Ritualskabelon",
+    "edit": "Rediger",
+    "delete": "Slet",
+    "save": "Gem",
+    "cancel": "Annuller",
+    "exportData": "Eksporter mine data",
+    "emailMe": "Send via e-mail",
+    "requestPurge": "Anmod om datasletning",
+    "emergencyPurge": "Nødrensning",
+    "restore": "Gendan slettede data",
+    "logout": "Log ud"
+  },
+  "settings": {
+    "title": "Indstillinger",
+    "username": "Brugernavn",
+    "role": "Rolle",
+    "exportOptions": "Eksportmuligheder",
+    "rituals": "Ritualskabeloner",
+    "schedules": "Skemaer",
+    "journals": "Dagbogsindlæg",
+    "xp": "XP-status",
+    "format": "Format"
+  },
+  "notifications": {
+    "exportReady": "Eksport færdig!",
+    "purgeRequested": "Sletningsanmodning sendt",
+    "restored": "Data gendannet"
+  },
+  "errors": {
+    "unexpected": "Der opstod en uventet fejl."
+  }
+}

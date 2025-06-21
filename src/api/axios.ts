@@ -1,10 +1,11 @@
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-// Attach token to every request if available
+// Attach token to every request
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token && config.headers) {
@@ -13,14 +14,14 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Optionally, handle 401 globally
+// Global error handling
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      // e.g., redirect to login
-      window.location.href = '/login';
-    }
+    // Extract message
+    const message = error.response?.data?.message || 'An unexpected error occurred.';
+    // Show toast notification
+    toast.error(message);
     return Promise.reject(error);
   }
 );

@@ -1,0 +1,50 @@
+// File: src/locales/de.json
+{
+  "app": { "name": "0wnd Gewohnheits-App" },
+  "navigation": { "main": "Hauptnavigation" },
+  "tabs": {
+    "journal": "Tagebuch",
+    "prompts": "Eingabeaufforderungen",
+    "rituals": "Rituale",
+    "settings": "Einstellungen",
+    "analytics": "Analysen",
+    "purge-requests": "Löschanfragen"
+  },
+  "rituals": {
+    "title": "Ritualvorlagen",
+    "new": "Neues Ritual erstellen",
+    "edit": "Ritual bearbeiten",
+    "delete": "Ritual löschen"
+  },
+  "buttons": {
+    "newRitual": "Neue Ritualvorlage",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "exportData": "Meine Daten exportieren",
+    "emailMe": "Per E-Mail senden",
+    "requestPurge": "Daten-Löschung anfragen",
+    "emergencyPurge": "Notfall-Löschung",
+    "restore": "Daten wiederherstellen",
+    "logout": "Abmelden"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "username": "Benutzername",
+    "role": "Rolle",
+    "exportOptions": "Exportoptionen",
+    "rituals": "Ritualvorlagen",
+    "schedules": "Zeitpläne",
+    "journals": "Tagebucheinträge",
+    "xp": "XP-Status",
+    "format": "Format"
+  },
+  "notifications": {
+    "exportReady": "Export ist fertig!",
+    "purgeRequested": "Löschanfrage eingereicht"
+  },
+  "errors": {
+    "unexpected": "Ein unerwarteter Fehler ist aufgetreten."
+  }
+}

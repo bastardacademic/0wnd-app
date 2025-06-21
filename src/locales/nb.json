@@ -1,0 +1,51 @@
+// File: src/locales/nb.json
+{
+  "app": { "name": "0wnd Vaneapp" },
+  "navigation": { "main": "Hovednavigasjon" },
+  "tabs": {
+    "journal": "Dagbok",
+    "prompts": "Spørsmål",
+    "rituals": "Ritualer",
+    "settings": "Innstillinger",
+    "analytics": "Analyse",
+    "purge-requests": "Sletteforespørsler"
+  },
+  "rituals": {
+    "title": "Ritualmaler",
+    "new": "Opprett nytt rituale",
+    "edit": "Rediger rituale",
+    "delete": "Slett rituale"
+  },
+  "buttons": {
+    "newRitual": "Ny Ritualmal",
+    "edit": "Rediger",
+    "delete": "Slett",
+    "save": "Lagre",
+    "cancel": "Avbryt",
+    "exportData": "Eksporter mine data",
+    "emailMe": "Send meg e-post",
+    "requestPurge": "Be om datasletting",
+    "emergencyPurge": "Nødsletting",
+    "restore": "Gjenopprett slettede data",
+    "logout": "Logg ut"
+  },
+  "settings": {
+    "title": "Innstillinger",
+    "username": "Brukernavn",
+    "role": "Rolle",
+    "exportOptions": "Eksportalternativer",
+    "rituals": "Ritualmaler",
+    "schedules": "Planer",
+    "journals": "Dagbokoppføringer",
+    "xp": "XP-status",
+    "format": "Format"
+  },
+  "notifications": {
+    "exportReady": "Eksport klar!",
+    "purgeRequested": "Sletteforespørsel sendt",
+    "restored": "Data gjenopprettet"
+  },
+  "errors": {
+    "unexpected": "En uventet feil oppstod."
+  }
+}

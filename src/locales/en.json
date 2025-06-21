@@ -1,0 +1,30 @@
+{
+  "app": { "name": "0wnd Habit App" },
+  "navigation": { "main": "Main navigation" },
+  "tabs": {
+    "journal": "Journal",
+    "prompts": "Prompts",
+    "rituals": "Rituals",
+    "settings": "Settings",
+    "analytics": "Analytics",
+    "purge-requests": "Purge Requests"
+  },
+  "rituals": {
+    "title": "Ritual Templates",
+    "new": "Create new ritual",
+    "edit": "Edit ritual",
+    "delete": "Delete ritual"
+  },
+  "buttons": {
+    "newRitual": "New Ritual Template",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "settings": {
+    "title": "Settings",
+    "username": "Username",
+    "role": "Role"
+  }
+}

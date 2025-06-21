@@ -1,0 +1,50 @@
+// File: src/locales/nl.json
+{
+  "app": { "name": "0wnd Gewoonte App" },
+  "navigation": { "main": "Hoofd navigatie" },
+  "tabs": {
+    "journal": "Dagboek",
+    "prompts": "Suggesteringen",
+    "rituals": "Rituelen",
+    "settings": "Instellingen",
+    "analytics": "Analyse",
+    "purge-requests": "Verwijder Verzoeken"
+  },
+  "rituals": {
+    "title": "Ritueel Sjablonen",
+    "new": "Nieuw ritueel maken",
+    "edit": "Ritueel bewerken",
+    "delete": "Ritueel verwijderen"
+  },
+  "buttons": {
+    "newRitual": "Nieuw Ritueel Sjabloon",
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "exportData": "Mijn gegevens exporteren",
+    "emailMe": "E-mail mij",
+    "requestPurge": "Verzoek tot gegevensverwijdering",
+    "emergencyPurge": "Noodverwijdering",
+    "restore": "Gegevens herstellen",
+    "logout": "Uitloggen"
+  },
+  "settings": {
+    "title": "Instellingen",
+    "username": "Gebruikersnaam",
+    "role": "Rol",
+    "exportOptions": "Exporteeropties",
+    "rituals": "Ritueel Sjablonen",
+    "schedules": "Schema's",
+    "journals": "Dagboekvermeldingen",
+    "xp": "XP Status",
+    "format": "Formaat"
+  },
+  "notifications": {
+    "exportReady": "Export gereed!",
+    "purgeRequested": "Verzoek tot verwijdering ingediend"
+  },
+  "errors": {
+    "unexpected": "Er is een onverwachte fout opgetreden."
+  }
+}

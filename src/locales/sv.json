@@ -1,0 +1,51 @@
+// File: src/locales/sv.json
+{
+  "app": { "name": "0wnd Vanespårningsapp" },
+  "navigation": { "main": "Huvudnavigering" },
+  "tabs": {
+    "journal": "Dagbok",
+    "prompts": "Uppmaningar",
+    "rituals": "Ritualer",
+    "settings": "Inställningar",
+    "analytics": "Analys",
+    "purge-requests": "Rensningsförfrågningar"
+  },
+  "rituals": {
+    "title": "Ritualmallar",
+    "new": "Skapa ny ritual",
+    "edit": "Redigera ritual",
+    "delete": "Ta bort ritual"
+  },
+  "buttons": {
+    "newRitual": "Ny Ritualmall",
+    "edit": "Redigera",
+    "delete": "Ta bort",
+    "save": "Spara",
+    "cancel": "Avbryt",
+    "exportData": "Exportera mina data",
+    "emailMe": "Skicka via e-post",
+    "requestPurge": "Begär datarensning",
+    "emergencyPurge": "Nödrensning",
+    "restore": "Återställ raderade data",
+    "logout": "Logga ut"
+  },
+  "settings": {
+    "title": "Inställningar",
+    "username": "Användarnamn",
+    "role": "Roll",
+    "exportOptions": "Exportalternativ",
+    "rituals": "Ritualmallar",
+    "schedules": "Schema",
+    "journals": "Dagboksposter",
+    "xp": "XP-status",
+    "format": "Format"
+  },
+  "notifications": {
+    "exportReady": "Export klar!",
+    "purgeRequested": "Rensningsförfrågan skickad",
+    "restored": "Data återställd"
+  },
+  "errors": {
+    "unexpected": "Ett oväntat fel inträffade."
+  }
+}

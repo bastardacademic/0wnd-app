@@ -1,0 +1,21 @@
+{
+  "settings": {
+    "title": "Configuración",
+    "username": "Usuario",
+    "role": "Rol",
+    "exportOptions": "Opciones de Exportación"
+  },
+  "buttons": {
+    "exportData": "Exportar mis datos",
+    "emailMe": "Enviarme por correo",
+    "requestPurge": "Solicitar eliminación de datos",
+    "emergencyPurge": "Eliminación de emergencia",
+    "logout": "Cerrar sesión"
+  },
+  "dialogs": {
+    "confirmPurge": "Confirmar eliminación de datos"
+  },
+  "errors": {
+    "unexpected": "Ocurrió un error inesperado."
+  }
+}

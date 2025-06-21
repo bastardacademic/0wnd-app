@@ -10,11 +10,15 @@ import xpRoutes from './routes/xp';
 import journalRoutes from './routes/journal';
 import { authenticateToken } from './middleware/auth';
 import userRoutes from './routes/user';
+import audioPromptsRouter from './routes/audioPrompts';
+import path from 'path';
+import chatRouter from './routes/chat';
 
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use('/uploads/audio', express.static(path.join(__dirname, '../uploads/audio')));
 
 // Connect MongoDB
 typescript
@@ -31,6 +35,10 @@ app.use('/api/schedules', authenticateToken, scheduleRoutes);
 app.use('/api/xp', authenticateToken, xpRoutes);
 app.use('/api/journal', authenticateToken, journalRoutes);
 app.use('/api/user', userRoutes)
+app.use('/api/audio-prompts', audioPromptsRouter);
+app.use('/api/chat', chatRouter);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+export default app;

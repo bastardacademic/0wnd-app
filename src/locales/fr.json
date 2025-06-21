@@ -1,0 +1,50 @@
+// File: src/locales/fr.json
+{
+  "app": { "name": "Application d'habitudes 0wnd" },
+  "navigation": { "main": "Navigation principale" },
+  "tabs": {
+    "journal": "Journal",
+    "prompts": "Invites",
+    "rituals": "Rituels",
+    "settings": "Paramètres",
+    "analytics": "Analytique",
+    "purge-requests": "Demandes de Purge"
+  },
+  "rituals": {
+    "title": "Modèles de Rituels",
+    "new": "Créer un nouveau rituel",
+    "edit": "Modifier le rituel",
+    "delete": "Supprimer le rituel"
+  },
+  "buttons": {
+    "newRitual": "Nouveau Modèle de Rituel",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "exportData": "Exporter mes données",
+    "emailMe": "Envoyer par e-mail",
+    "requestPurge": "Demander la purge des données",
+    "emergencyPurge": "Purge d'urgence",
+    "restore": "Restaurer les données",
+    "logout": "Déconnexion"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "username": "Nom d'utilisateur",
+    "role": "Rôle",
+    "exportOptions": "Options d'exportation",
+    "rituals": "Modèles de Rituels",
+    "schedules": "Calendriers",
+    "journals": "Entrées de Journal",
+    "xp": "Statut XP",
+    "format": "Format"
+  },
+  "notifications": {
+    "exportReady": "Exportation prête !",
+    "purgeRequested": "Demande de purge soumise"
+  },
+  "errors": {
+    "unexpected": "Une erreur inattendue est survenue."
+  }
+}

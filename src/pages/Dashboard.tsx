@@ -21,6 +21,7 @@ const Dashboard: React.FC = () => {
         <Route path="analytics" element={<AnalyticsScreen />} />
         <Route path="settings" element={<SettingsScreen />} />
         <Route path="settings" element={<SettingsScreen />} />
+        <Route path="/chat/:peerId" element={<ChatWindow peerId={useParams().peerId!} />} />
         <Route
           path="purge-requests"
           element={
