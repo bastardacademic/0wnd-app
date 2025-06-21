@@ -11,6 +11,7 @@ export const Layout: React.FC = () => {
     { path: '/prompts', label: 'Prompts' },
     { path: '/rituals', label: 'Rituals' },
     { path: '/analytics', label: 'Analytics' }
+    { path: '/chat', label: 'Chat' } 
   ];
   const domTabs = [
     { path: '/settings', label: 'Settings' },

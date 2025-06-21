@@ -1,18 +1,35 @@
 // File: src/api/services/journalService.ts
-import axios from 'axios';
-import * as mockApi from '../stubs/mockApi';
-import type { JournalEntry } from './types';
+import api from './axios';
+import type { JournalEntry, PaginationParams, PaginationResponse } from './types';
 
-export async function getJournalEntries(): Promise<JournalEntry[]> {
-  return process.env.NODE_ENV === 'development'
-    ? mockApi.fetchJournalEntries()
-    : (await axios.get<JournalEntry[]>(`${import.meta.env.VITE_API_URL}/journal`)).data;
-}
+export const getJournalEntriesPaginated = async (
+  params: PaginationParams & { tags?: string; keyword?: string; from?: string; to?: string }
+): Promise<PaginationResponse<JournalEntry>> => {
+  const res = await api.get<PaginationResponse<JournalEntry>>('/journal', { params });
+  return res.data;
+};
 
-export async function createJournalEntry(
-  entry: Omit<JournalEntry, 'id' | 'createdAt'>
-): Promise<JournalEntry> {
-  return process.env.NODE_ENV === 'development'
-    ? mockApi.postJournalEntry(entry)
-    : (await axios.post<JournalEntry>(`${import.meta.env.VITE_API_URL}/journal`, entry)).data;
-}
+export const createJournalEntry = async (payload: { content: string; tags: string[]; mood: number }) =>
+  api.post<JournalEntry>('/journal', payload).then(res => res.data);
+
+export const createJournalEntry = async (
+  payload: { content: string; tags: string[] }
+): Promise<JournalEntry> => {
+  const res = await api.post<JournalEntry>('/journal', payload);
+  return res.data;
+};
+
+export const updateJournalEntry = async (id: string, payload: { content: string; tags: string[]; mood: number }) =>
+  api.put<JournalEntry>(`/journal/${id}`, payload).then(res => res.data);
+
+export const updateJournalEntry = async (
+  id: string,
+  payload: { content: string; tags: string[] }
+): Promise<JournalEntry> => {
+  const res = await api.put<JournalEntry>(`/journal/${id}`, payload);
+  return res.data;
+};
+
+export const deleteJournalEntry = async (id: string): Promise<void> => {
+  await api.delete(`/journal/${id}`);
+};

@@ -1,20 +1,18 @@
-// File: backend/src/models/Journal.ts
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IJournal extends Document {
   user: mongoose.Types.ObjectId;
-  createdAt: Date;
-  mood: string;
-  tags: string[];
   content: string;
+  tags: string[];
+  mood: number;
+  createdAt: Date;
 }
 
-const JournalSchema: Schema = new Schema({
+const JournalSchema = new Schema<IJournal>({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  createdAt: { type: Date, default: Date.now },
-  mood: String,
-  tags: [String],
-  content: String
-}, { timestamps: true });
+  content: { type: String, required: true },
+  tags: [{ type: String }],
+  mood: { type: Number, min: 1, max: 5, default: 3 }
+}, { timestamps: { createdAt: true, updatedAt: false } });
 
 export default mongoose.model<IJournal>('Journal', JournalSchema);

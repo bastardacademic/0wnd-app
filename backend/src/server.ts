@@ -13,6 +13,8 @@ import userRoutes from './routes/user';
 import audioPromptsRouter from './routes/audioPrompts';
 import path from 'path';
 import chatRouter from './routes/chat';
+import usersRouter from './routes/users';
+import tagsRouter from './routes/tags';
 
 dotenv.config();
 const app = express();
@@ -37,6 +39,8 @@ app.use('/api/journal', authenticateToken, journalRoutes);
 app.use('/api/user', userRoutes)
 app.use('/api/audio-prompts', audioPromptsRouter);
 app.use('/api/chat', chatRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/tags', tagsRouter);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
