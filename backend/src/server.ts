@@ -15,6 +15,9 @@ import path from 'path';
 import chatRouter from './routes/chat';
 import usersRouter from './routes/users';
 import tagsRouter from './routes/tags';
+import purgeRequests from './routes/purgeRequests';
+import undoPurgeRouter from './routes/undoPurge';
+import xpRouter from './routes/xp';
 
 dotenv.config();
 const app = express();
@@ -41,6 +44,9 @@ app.use('/api/audio-prompts', audioPromptsRouter);
 app.use('/api/chat', chatRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/tags', tagsRouter);
+app.use('/api/purge-requests', purgeRequests);
+app.use('/api/undo-purge', undoPurgeRouter);
+app.use('/api/xp', xpRouter);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,49 +1,28 @@
-﻿import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useUser } from "../../context/UserContext";
-import { RitualCard } from "../rituals/RitualCard";
-import { DevotionMeter } from "../devotion/DevotionMeter";
+﻿import React, { useContext } from 'react';
+import { AuthContext } from '@/context/AuthContext';
+import { DevotionLevelBadge } from '@/components/devotion/DevotionLevelBadge';
+import { ScheduledRitualsList } from '@/components/rituals/ScheduledRitualsList';
+import Journal from '@/pages/Journal';
 
-export const SubDashboard = () => {
-  const { id } = useUser();
-  const [rituals, setRituals] = useState([]);
-  const [devotion, setDevotion] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const ritualsRes = await axios.get("/api/rituals/assigned", {
-          headers: { "x-user-id": id }
-        });
-        setRituals(ritualsRes.data);
-
-        const devotionRes = await axios.get(`/api/devotion/${id}`);
-        setDevotion(devotionRes.data);
-      } catch (err) {
-        console.error("Error loading dashboard:", err);
-      }
-    }
-
-    fetchData();
-  }, [id]);
-
+const SubDashboard: React.FC = () => {
+  const { user } = useContext(AuthContext);
   return (
-    <div className="space-y-6 p-4">
-      <h2 className="text-xl font-semibold">Welcome, Sub</h2>
-
+    <div className="p-6 space-y-8">
+      <h1 className="text-3xl font-bold">Sub Dashboard</h1>
+      <div className="flex items-center space-x-4">
+        <DevotionLevelBadge />
+        <span className="text-lg">Welcome, {user?.username}</span>
+      </div>
       <section>
-        <h3 className="text-lg font-bold mb-2">Your Devotion</h3>
-        {devotion ? <DevotionMeter data={devotion} /> : <p>Loading...</p>}
+        <h2 className="text-2xl font-semibold mb-4">Your Scheduled Rituals</h2>
+        <ScheduledRitualsList />
       </section>
-
       <section>
-        <h3 className="text-lg font-bold mb-2">Assigned Rituals</h3>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {rituals.map((ritual) => (
-            <RitualCard key={ritual.id} ritual={ritual} />
-          ))}
-        </div>
+        <h2 className="text-2xl font-semibold mb-4">Your Journal</h2>
+        <Journal />
       </section>
     </div>
   );
 };
+
+export default SubDashboard;

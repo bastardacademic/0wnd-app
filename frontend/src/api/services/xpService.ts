@@ -1,16 +1,13 @@
 // File: src/api/services/xpService.ts
-import axios from 'axios';
-import * as mockApi from '../stubs/mockApi';
-import type { XPData } from './types';
+import api from './axios';
+import type { XP } from './types';
 
-export async function getXP(): Promise<XPData> {
-  return process.env.NODE_ENV === 'development'
-    ? mockApi.fetchXP()
-    : (await axios.get<XPData>(`${import.meta.env.VITE_API_URL}/xp`)).data;
-}
+export const getMyXP = async (): Promise<XP> => {
+  const res = await api.get<XP>('/xp/me');
+  return res.data;
+};
 
-export async function addXP(amount: number): Promise<XPData> {
-  return process.env.NODE_ENV === 'development'
-    ? mockApi.updateXP(amount)
-    : (await axios.post<XPData>(`${import.meta.env.VITE_API_URL}/xp`, { amount })).data;
-}
+export const addXP = async (amount: number): Promise<XP> => {
+  const res = await api.post<XP>('/xp/add', { amount });
+  return res.data;
+};

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // backend/routes/analytics.js
 
 const express = require('express');
@@ -40,4 +39,3 @@ router.get('/real-time-insights', async (req, res) => {
 });
 
 module.exports = router;
->>>>>>> 55c2a9f (Organize files into Testing and Docs directories, implement testing, auditing, and documentation updates)
