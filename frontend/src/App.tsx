@@ -8,19 +8,34 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import Dashboard from '@/pages/Dashboard';
 
-export default function App() {
-  const { token } = useContext(AuthContext);
-
-  return (
+const App: React.FC = () => (
+  <AuthProvider>
     <Router>
       <Routes>
-        <Route path="/login" element={!token ? <Login /> : <Navigate to="/" />} />
-        <Route path="/register" element={!token ? <Register /> : <Navigate to="/" />} />
-        <Route
-          path="/*"
-          element={token ? <Dashboard /> : <Navigate to="/login" />}
-        />
+        {/* Public Routes */}
+        <Route path="/login" element={<Login />} />
+        {/* Protected Routes */}
+        <Route path="/*" element={<RequireAuth><Dashboard /></RequireAuth>} />
+        {/* Redirect unknown paths to root */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
-  );
-}
+  </AuthProvider>
+);
+
+// Higher-order component to protect routes
+import { useContext } from 'react';
+import { AuthContext } from '@/context/AuthContext';
+import { Navigate, useLocation } from 'react-router-dom';
+
+const RequireAuth: React.FC<{ children: JSX.Element }> = ({ children }) => {
+  const { user } = useContext(AuthContext);
+  const location = useLocation();
+  if (!user) {
+    // Redirect to login, preserve location
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+  return children;
+};
+
+export default App;
