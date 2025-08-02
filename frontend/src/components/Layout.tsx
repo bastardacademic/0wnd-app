@@ -10,8 +10,9 @@ export const Layout: React.FC = () => {
     { path: '/journal', label: 'Journal' },
     { path: '/prompts', label: 'Prompts' },
     { path: '/rituals', label: 'Rituals' },
-    { path: '/analytics', label: 'Analytics' }
-    { path: '/chat', label: 'Chat' } 
+    { path: '/analytics', label: 'Analytics' },
+    { path: '/chat', label: 'Chat' },
+    { path: '/scenic', label: 'Scenic' }
   ];
   const domTabs = [
     { path: '/settings', label: 'Settings' },
