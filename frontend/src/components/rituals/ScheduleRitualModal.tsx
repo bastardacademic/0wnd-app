@@ -1,98 +1,72 @@
 // src/components/rituals/ScheduleRitualModal.tsx
-import React, { useState, useEffect } from "react";
-import { createScheduledRitual } from "@/api/services/ritualService";
+import React, { useState } from 'react';
+import { Dialog } from '@headlessui/react';
+import { createScheduledRitual } from '@/api/services/scheduledRitualsService';
+import toast from 'react-hot-toast';
+import type { RitualTemplate } from '@/api/services/types';
 
 interface Props {
+  isOpen: boolean;
   onClose: () => void;
-  onSuccess: () => void;
+  onSuccess: (ritual: any) => void;
+  templates: RitualTemplate[];
 }
 
-export const ScheduleRitualModal: React.FC<Props> = ({ onClose, onSuccess }) => {
-  const [form, setForm] = useState({
-    name: "",
-    description: "",
-    scheduledFor: "",
-  });
+export const ScheduleRitualModal: React.FC<Props> = ({ isOpen, onClose, onSuccess, templates }) => {
+  const [templateId, setTemplateId] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const [outcomes, setOutcomes] = useState({ onTime: '', late: '', missed: '' });
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
-  const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => setVisible(true), 10);
-    return () => clearTimeout(timeout);
-  }, []);
-
-  const handleSubmit = async () => {
-    if (!form.name || !form.scheduledFor) {
-      setError("⛔ Name and Date/Time are required.");
-      return;
-    }
-
+  const handleSave = async () => {
     setSaving(true);
     try {
-      await createScheduledRitual(form);
-      onSuccess();
-      handleClose();
-    } catch (err) {
-      console.error(err);
-      setError("❌ Failed to schedule ritual.");
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const handleClose = () => {
-    setVisible(false);
-    setTimeout(onClose, 200);
+      const iso = new Date(`${date}T${time}:00`).toISOString();
+      const ritual = await createScheduledRitual({ template: templateId, scheduledTime: iso, outcomes });
+      onSuccess(ritual);
+      toast.success('Scheduled ritual created');
+      onClose();
+    } catch {
+      toast.error('Failed to schedule');
+    } finally { setSaving(false); }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div
-        className={`transition-all duration-200 transform ${
-          visible ? "opacity-100 scale-100" : "opacity-0 scale-95"
-        } bg-neutral-900 p-6 rounded-lg shadow-xl w-full max-w-md`}
-      >
-        <h2 className="text-2xl font-bold mb-4 text-white">📅 Schedule a Ritual</h2>
-
-        <input
-          type="text"
-          placeholder="Ritual Name"
-          className="w-full p-3 rounded bg-neutral-800 mb-3"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
-        <textarea
-          placeholder="Description (optional)"
-          className="w-full p-3 rounded bg-neutral-800 mb-3"
-          value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
-        />
-        <input
-          type="datetime-local"
-          className="w-full p-3 rounded bg-neutral-800 mb-4"
-          value={form.scheduledFor}
-          onChange={(e) => setForm({ ...form, scheduledFor: e.target.value })}
-        />
-
-        {error && <p className="text-red-400 text-sm mb-2">{error}</p>}
-
-        <div className="flex justify-end gap-2">
-          <button
-            onClick={handleClose}
-            className="px-4 py-2 rounded bg-neutral-700 hover:bg-neutral-600 text-sm"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSubmit}
-            disabled={saving}
-            className="px-4 py-2 rounded bg-green-600 hover:bg-green-500 text-sm disabled:opacity-50"
-          >
-            {saving ? "Saving..." : "Schedule"}
+    <Dialog open={isOpen} onClose={onClose} className="fixed inset-0 flex items-center justify-center z-50">
+      <Dialog.Overlay className="fixed inset-0 bg-black opacity-50" />
+      <div className="bg-white dark:bg-gray-800 rounded p-6 w-full max-w-lg space-y-4">
+        <Dialog.Title className="text-xl font-semibold">Schedule Ritual</Dialog.Title>
+        <select value={templateId} onChange={e => setTemplateId(e.target.value)} className="w-full p-2 rounded border">
+          <option value="">Select template</option>
+          {templates.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
+        </select>
+        <div className="flex space-x-2">
+          <input type="date" value={date} onChange={e=>setDate(e.target.value)} className="flex-1 p-2 rounded border" />
+          <input type="time" value={time} onChange={e=>setTime(e.target.value)} className="flex-1 p-2 rounded border" />
+        </div>
+        {/* Outcome assignments */}
+        <div className="space-y-2">
+          <label className="font-medium">On-Time Reward</label>
+          <input type="text" value={outcomes.onTime} onChange={e=>setOutcomes(o=>({...o,onTime:e.target.value}))} className="w-full p-2 rounded border" />
+        </div>
+        <div className="space-y-2">
+          <label className="font-medium">Late Punishment</label>
+          <input type="text" value={outcomes.late} onChange={e=>setOutcomes(o=>({...o,late:e.target.value}))} className="w-full p-2 rounded border" />
+        </div>
+        <div className="space-y-2">
+          <label className="font-medium">Missed Punishment</label>
+          <input type="text" value={outcomes.missed} onChange={e=>setOutcomes(o=>({...o,missed:e.target.value}))} className="w-full p-2 rounded border" />
+        </div>
+        <div className="flex justify-end space-x-2 pt-4">
+          <button onClick={onClose} className="px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded">Cancel</button>
+          <button onClick={handleSave} disabled={saving} className="px-4 py-2 bg-blue-600 text-white rounded">
+            {saving ? 'Saving...' : 'Create'}
           </button>
         </div>
       </div>
-    </div>
+    </Dialog>
   );
+};
+
 };
