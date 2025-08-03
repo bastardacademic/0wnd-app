@@ -26,6 +26,21 @@ router.put('/:id', authorizeRole('Dom', 'Switch'), async (req: AuthRequest, res)
   }
 });
 
+/**
+ * POST /api/scheduled-rituals
+ * Body: { template, scheduledTime, outcomes: { onTime, late, missed } }
+ */
+router.post('/', authorizeRole('Dom','Switch'), async (req: AuthRequest, res) => {
+  const { template, scheduledTime, outcomes } = req.body;
+  const ritual = await ScheduledRitual.create({
+    template,
+    user: req.user!.id,
+    scheduledTime: new Date(scheduledTime),
+    outcomes,
+  });
+  res.status(201).json(ritual);
+});
+
 // Sub marks proof sent
 router.post('/:id/proof-sent', authenticateToken, authorizeRole('Sub'), async (req: AuthRequest, res) => {
   const ritual = await ScheduledRitual.findById(req.params.id);
