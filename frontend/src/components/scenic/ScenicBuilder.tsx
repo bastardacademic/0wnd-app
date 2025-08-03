@@ -1,8 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
+// remove static PROMPT_OPTIONS
 import Select from 'react-select';
-import { getScenicPlans, createScenicPlan, updateScenicPlan, deleteScenicPlan } from '@/api/services/scenicService';
-import { AuthContext } from '@/context/AuthContext';
-import toast from 'react-hot-toast';
+import { useParams, useNavigate } from 'react-router-dom';
+import {
+  getScenicPlans,
+  getScenicPlan,
+  createScenicPlan,
+  updateScenicPlan,
+  deleteScenicPlan,
+  getScenicOptions
+} from '@/api/services/scenicService';
 
 const roleOptions = [
   { value: 'Top', label: 'Top' },
@@ -17,10 +24,14 @@ export const ScenicBuilder: React.FC = () => {
   const { user } = useContext(AuthContext);
   const [plans, setPlans] = useState<any[]>([]);
   const [editingPlan, setEditingPlan] = useState<any>(null);
+  const [promptOptions, setPromptOptions] = useState<Record<string, string[]>>({ roles: [], toys: [], equipment: [], vibes: [] });
   const [form, setForm] = useState({ title: '', partnerId: '', freeText: '', rolePrompts: [], toys: [], equipment: [], vibes: [] });
 
-  useEffect(() => { loadPlans(); }, []);
-  const loadPlans = async () => { setPlans(await getScenicPlans()); };
+ useEffect(() => {
+  getScenicOptions().then(setPromptOptions);
+  fetchPlans();
+  if (planId) loadPlan(planId);
+}, [planId]);
 
   const handleSave = async () => {
     try {
@@ -53,31 +64,21 @@ export const ScenicBuilder: React.FC = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-semibold mb-4">Scenic Builder</h2>
-      <div className="space-y-2 mb-4">
-        <input type="text" placeholder="Title" value={form.title}
-          onChange={e=>setForm(f=>({...f,title:e.target.value}))}
-          className="w-full p-2 border rounded" />
-        <input type="text" placeholder="Partner ID" value={form.partnerId}
-          onChange={e=>setForm(f=>({...f,partnerId:e.target.value}))}
-          className="w-full p-2 border rounded" />
-        <textarea placeholder="Free description" value={form.freeText}
-          onChange={e=>setForm(f=>({...f,freeText:e.target.value}))}
-          className="w-full p-2 border rounded h-32"/>
-        <Select isMulti options={roleOptions} value={form.rolePrompts}
-          onChange={opts=>setForm(f=>({...f,rolePrompts:opts}))}
-          placeholder="Select roles"/>
-        <Select isMulti options={toyOptions} value={form.toys}
-          onChange={opts=>setForm(f=>({...f,toys:opts}))}
-          placeholder="Select toys"/>
-        <Select isMulti options={equipmentOptions} value={form.equipment}
-          onChange={opts=>setForm(f=>({...f,equipment:opts}))}
-          placeholder="Select equipment"/>
-        <Select isMulti options={vibeOptions} value={form.vibes}
-          onChange={opts=>setForm(f=>({...f,vibes:opts}))}
-          placeholder="Select vibes"/>
-      </div>
+   {(['roles','toys','equipment','vibes'] as const).map(cat => (
+  <div key={cat} className="space-y-1">
+    <label className="font-medium capitalize">{cat}</label>
+    <Select
+      isMulti
+      options={promptOptions[cat].map(o => ({ value: o, label: o }))}
+      value={(form.prompts![cat]||[]).map(v => ({ value: v, label: v }))}
+      onChange={opts => setForm(f => ({
+        ...f,
+        prompts: { ...f.prompts!, [cat]: opts.map(o => o.value) }
+      }))}
+    />
+  </div>
+))}
+
       <button onClick={handleSave} className="px-4 py-2 bg-indigo-600 text-white rounded">
         {editingPlan ? 'Update Plan' : 'Create Plan'}
       </button>
