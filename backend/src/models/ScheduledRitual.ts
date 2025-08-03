@@ -7,10 +7,16 @@ export interface IScheduledRitual extends Document {
   user: mongoose.Types.ObjectId;
   scheduledTime: Date;
   status: Status;
-  proofRequested: boolean;         // Dom requests proof
-  proofSent: boolean;             // Sub has sent proof
-  proofApproved?: boolean;        // Dom approves proof
-  outcomeReward?: string;         // outcome: reward or punishment instructions
+  // proof fields...
+  proofRequested: boolean;
+  proofSent: boolean;
+  proofApproved?: boolean;
+  // outcome assignments
+  outcomes: {
+    onTime: string;
+    late: string;
+    missed: string;
+  };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -23,7 +29,11 @@ const ScheduledRitualSchema = new Schema<IScheduledRitual>({
   proofRequested: { type: Boolean, default: false },
   proofSent: { type: Boolean, default: false },
   proofApproved: { type: Boolean },
-  outcomeReward: { type: String }
+  outcomes: {
+    onTime: { type: String, default: '' },
+    late: { type: String, default: '' },
+    missed: { type: String, default: '' },
+  }
 }, { timestamps: true });
 
 export default mongoose.model<IScheduledRitual>('ScheduledRitual', ScheduledRitualSchema);
