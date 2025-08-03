@@ -1,4 +1,14 @@
 // src/api/services/scheduledRitualsService.ts
+import api from './axios';
+import type { ScheduledRitual } from './types';
+
+export const createScheduledRitual = async (
+  payload: { template: string; scheduledTime: string; outcomes: { onTime: string; late: string; missed: string } }
+): Promise<ScheduledRitual> => {
+  const res = await api.post<ScheduledRitual>('/scheduled-rituals', payload);
+  return res.data;
+};
+
 interface ScheduledRitual {
   id: string;
   name: string;
