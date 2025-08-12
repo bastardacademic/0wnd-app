@@ -34,6 +34,7 @@ const Dashboard: React.FC = () => {
         <Route path="rituals" element={<RitualsScreen />} />
         <Route path="analytics" element={<AnalyticsScreen />} />
         <Route path="settings" element={<SettingsScreen />} />
+        <Route path="scenic" element={<ScenicBuilder />} 
         <Route path="purge-requests" element={
           (user?.role === 'Dom' || user?.role === 'Switch')
             ? <PurgeRequestsDashboard />

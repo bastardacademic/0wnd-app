@@ -18,6 +18,8 @@ import tagsRouter from './routes/tags';
 import purgeRequests from './routes/purgeRequests';
 import undoPurgeRouter from './routes/undoPurge';
 import xpRouter from './routes/xp';
+import scenicRouter from './routes/scenic';
+import scenicOptionsRouter from './routes/scenicOptions';
 
 dotenv.config();
 const app = express();
@@ -47,6 +49,8 @@ app.use('/api/tags', tagsRouter);
 app.use('/api/purge-requests', purgeRequests);
 app.use('/api/undo-purge', undoPurgeRouter);
 app.use('/api/xp', xpRouter);
+app.use('/api/scenic', scenicRouter);
+app.use('/api/scenic', scenicOptionsRouter);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
