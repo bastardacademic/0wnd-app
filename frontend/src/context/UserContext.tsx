@@ -1,26 +1,28 @@
-﻿import React, { createContext, useContext } from "react";
+﻿import React, { createContext, useContext, useState } from "react";
+
+type Role = "dom" | "sub" | "switch";
 
 type User = {
   id: string;
-  role: "dom" | "sub" | "switch";
+  role: Role;
   displayName: string;
+  setRole: (role: Role) => void;
 };
 
 const defaultUser: User = {
-  id: "sub123",
+  id: "69de97027af1c2ddb873ceca",
   role: "sub",
-  displayName: "Sub Test"
+  displayName: "Test User",
+  setRole: () => {},
 };
 
-export const UserContext = createContext<{
-  user?: User;
-  setUser: (u?: User) => void;
-}>({ setUser: () => {} });
+const UserContext = createContext<User>(defaultUser);
 
-export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User>();
+export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  const [role, setRole] = useState<Role>("sub");
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ id: "69de97027af1c2ddb873ceca", role, displayName: "Test User", setRole }}>
       {children}
     </UserContext.Provider>
   );
