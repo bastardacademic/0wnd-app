@@ -1,16 +1,18 @@
-import React from "react";
+﻿import React from "react";
 
-export function DevotionLevelBadge({ xp }: { xp: number }) {
-  let level = "Newcomer";
+function xpToLevel(xp: number): string {
+  if (xp >= 1000) return "Master";
+  if (xp >= 500) return "Veteran";
+  if (xp >= 250) return "Experienced";
+  if (xp >= 100) return "Initiate";
+  return "Newcomer";
+}
 
-  if (xp >= 1000) level = "Master";
-  else if (xp >= 500) level = "Veteran";
-  else if (xp >= 250) level = "Experienced";
-  else if (xp >= 100) level = "Initiate";
-
+export function DevotionLevelBadge({ xp, level }: { xp?: number; level?: string }) {
+  const label = level ?? (xp !== undefined ? xpToLevel(xp) : "Newcomer");
   return (
-    <div className="inline-block px-4 py-2 rounded-full bg-purple-700 text-white font-bold">
-      {level}
+    <div className="inline-block px-4 py-2 rounded-full bg-purple-700 text-white font-bold text-sm">
+      {label}
     </div>
   );
 }

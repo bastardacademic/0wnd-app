@@ -1,18 +1,21 @@
 ﻿import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export const DevotionMeter = ({ userId }) => {
-  const [xp, setXp] = useState(0);
+type DevotionData = { total?: number; xp?: number };
+
+export const DevotionMeter = ({ userId, data }: { userId?: string; data?: DevotionData }) => {
+  const [xp, setXp] = useState<number>(data?.total ?? data?.xp ?? 0);
 
   useEffect(() => {
-    async function fetchDevotion() {
-      const res = await axios.get("/api/devotion", {
-        headers: { "x-user-id": userId }
-      });
-      setXp(res.data?.total || 0);
-    }
-    fetchDevotion();
+    if (!userId) return;
+    axios.get("/api/devotion", { headers: { "x-user-id": userId } })
+      .then(res => setXp(res.data?.total ?? 0))
+      .catch(() => {});
   }, [userId]);
+
+  useEffect(() => {
+    if (data) setXp(data.total ?? data.xp ?? 0);
+  }, [data]);
 
   const level = Math.floor(xp / 100);
   const progress = xp % 100;
@@ -27,7 +30,7 @@ export const DevotionMeter = ({ userId }) => {
         <div
           className="h-full bg-purple-600 transition-all"
           style={{ width: `${progress}%` }}
-        ></div>
+        />
       </div>
     </div>
   );
