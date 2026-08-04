@@ -2,9 +2,10 @@
 import axios from "axios";
 import { useUser } from "../../context/UserContext";
 import { RitualCard } from "../rituals/RitualCard";
+import { RitualTracker } from "../rituals/RitualTracker";
 import { DevotionMeter } from "../devotion/DevotionMeter";
 
-type Ritual = { id: string; name?: string; title?: string; description?: string };
+type Ritual = { id: string; name?: string; title?: string; description?: string; time?: string; duration?: number };
 type DevotionData = { level: string; xp: number };
 
 export const SubDashboard = () => {
@@ -49,9 +50,11 @@ export const SubDashboard = () => {
           ? <p className="text-sm text-neutral-400">No rituals assigned yet.</p>
           : (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {rituals.map((ritual) => (
-                <RitualCard key={ritual.id} ritual={ritual} />
-              ))}
+              {rituals.map((ritual) =>
+                ritual.time && ritual.duration
+                  ? <RitualTracker key={ritual.id} ritual={{ ...ritual, title: ritual.title ?? ritual.name }} />
+                  : <RitualCard key={ritual.id} ritual={ritual} />
+              )}
             </div>
           )
         }

@@ -1,14 +1,23 @@
 ﻿import { useState } from "react";
 import { createRitualTemplate } from "@/api/services/ritualService";
 import { OutcomeEditor } from "./OutcomeEditor";
+import { RitualScheduler } from "./RitualScheduler";
+
+const initialRitual = {
+  name: "",
+  description: "",
+  rewards: {},
+  userId: "me",
+  repeat: "once",
+  time: "09:00",
+  duration: 15,
+  xpOnTime: 0,
+  xpLate: 0,
+  xpMissed: 0,
+};
 
 export const ProtocolBuilder = () => {
-  const [ritual, setRitual] = useState({
-    name: "",
-    description: "",
-    rewards: {},
-    userId: "me",
-  });
+  const [ritual, setRitual] = useState(initialRitual);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -21,7 +30,7 @@ export const ProtocolBuilder = () => {
     setSaving(true);
     try {
       await createRitualTemplate(ritual);
-      setRitual({ name: "", description: "", rewards: {}, userId: "me" });
+      setRitual(initialRitual);
       setMessage("✅ Ritual saved!");
     } catch (error) {
       console.error(error);
@@ -47,6 +56,8 @@ export const ProtocolBuilder = () => {
         rows={4}
         className="w-full p-3 rounded bg-neutral-800 resize-none"
       />
+
+      <RitualScheduler config={ritual} setConfig={setRitual} />
 
       <OutcomeEditor
         config={ritual}

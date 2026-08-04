@@ -1,6 +1,7 @@
 ﻿import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "../../context/UserContext";
+import { BurnableViewer } from "../common/BurnableViewer";
 
 export const JournalList = () => {
   const { id } = useUser();
@@ -91,7 +92,9 @@ export const JournalList = () => {
           </div>
           <h4 className="text-lg font-semibold text-white">{entry.title}</h4>
           <p className="text-sm text-gray-300 mb-2">Mood: {entry.mood}</p>
-          <p className="text-white whitespace-pre-wrap">{entry.body}</p>
+          <BurnableViewer id={entry.id} type="journal">
+            <p className="text-white whitespace-pre-wrap">{entry.body}</p>
+          </BurnableViewer>
 
           {entry.media?.length > 0 && (
             <div className="mt-2 space-x-2">

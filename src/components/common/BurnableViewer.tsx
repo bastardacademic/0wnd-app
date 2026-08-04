@@ -6,7 +6,8 @@ export const BurnableViewer = ({ id, type, children }) => {
 
   useEffect(() => {
     axios.post("/api/burn", { id, type })
-      .then(() => setBurned(true));
+      .then(() => setBurned(true))
+      .catch(() => {});
   }, [id, type]);
 
   if (burned) return (

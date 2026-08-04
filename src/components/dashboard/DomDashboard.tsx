@@ -4,6 +4,7 @@ import { useUser } from "../../context/UserContext";
 import { RitualCard } from "../rituals/RitualCard";
 import { ProtocolBuilder } from "../rituals/ProtocolBuilder";
 import { DevotionMeter } from "../devotion/DevotionMeter";
+import { JournalList } from "../journal/JournalList";
 
 type Sub = { id: string; displayName: string; xp?: number };
 type Ritual = { id: string; name?: string; title?: string; description?: string; status?: string };
@@ -131,6 +132,12 @@ export const DomDashboard = () => {
             ))}
           </div>
         )}
+      </section>
+
+      {/* Sub Journal Entries */}
+      <section>
+        <h3 className="text-sm uppercase tracking-widest text-neutral-400 mb-3">Journal Entries</h3>
+        <JournalList />
       </section>
 
       {/* Rituals List */}

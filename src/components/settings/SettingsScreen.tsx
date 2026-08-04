@@ -1,4 +1,5 @@
 import React from "react";
+import { SettingsMfaSection } from "./SettingsMfaSection";
 
 export const SettingsScreen = () => {
   return (
@@ -14,15 +15,13 @@ export const SettingsScreen = () => {
 
       <section className="bg-neutral-800 p-4 rounded space-y-2">
         <h2 className="text-xl font-semibold">Security</h2>
-        <div className="text-neutral-400 text-sm">
-          (Coming soon: 2FA setup, backup codes, emergency data deletion...)
-        </div>
+        <SettingsMfaSection />
       </section>
 
       <section className="bg-neutral-800 p-4 rounded space-y-2">
         <h2 className="text-xl font-semibold">About</h2>
         <p className="text-neutral-400 text-sm">
-          Version 0.1.0 Beta — built for habit growth, devotion, and transformation.
+          Version 0.1.0 Beta ï¿½ built for habit growth, devotion, and transformation.
         </p>
       </section>
     </div>

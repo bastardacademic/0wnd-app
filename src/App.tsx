@@ -1,5 +1,6 @@
 ﻿import React, { useState } from "react";
 import { JournalEditor } from "@/components/journal/JournalEditor";
+import { JournalAnalytics } from "@/components/journal/JournalAnalytics";
 import { PromptDrawer } from "@/components/prompts/PromptDrawer";
 import { PromptResponseViewer } from "@/components/prompts/PromptResponseViewer";
 import { RitualsScreen } from "@/components/rituals/RitualsScreen";
@@ -55,7 +56,12 @@ export default function App() {
 
       <div className="bg-neutral-900 p-6 rounded-lg shadow-md space-y-4">
         {activeTab === "Dashboard" && <DashboardView />}
-        {activeTab === "Journal" && <JournalEditor />}
+        {activeTab === "Journal" && (
+          <div className="space-y-8">
+            <JournalEditor />
+            <JournalAnalytics />
+          </div>
+        )}
 	{activeTab === "Partners" && <PartnerLinking />}
         {activeTab === "Prompts" && (
           <div className="grid grid-cols-2 gap-6">
