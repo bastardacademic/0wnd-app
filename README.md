@@ -13,3 +13,11 @@ A secure habit-tracking, journaling, and messaging app with gamification element
 - **Backend**: Node.js, Express, MongoDB
 - **Frontend**: React.js, Redux, CSS
 - **Security**: End-to-End Encryption, JWT Auth
+
+## Setup
+After cloning the repository, install dependencies by running:
+
+```bash
+./setup.sh
+```
+
