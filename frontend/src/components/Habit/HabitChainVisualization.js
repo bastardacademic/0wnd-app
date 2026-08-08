@@ -1,3 +1,0 @@
-import React from 'react';
-// Visualization code...
-export default HabitChainVisualization;
