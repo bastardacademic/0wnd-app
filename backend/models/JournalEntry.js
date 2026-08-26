@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const JournalEntrySchema = new Schema({
-    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    content: { type: String, required: true },
-    category: { type: String, enum: ['Public', 'Private', 'Shared', 'Erotica'], default: 'Private' },
-    createdAt: { type: Date, default: Date.now }
-});
+const journalEntrySchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  title:  { type: String, default: 'Untitled' },
+  mood:   { type: String, default: 'neutral' },
+  body:   { type: String, default: '' },
+  media:  [String],
+  tags:   [String],
+}, { timestamps: true });
 
-const JournalEntry = mongoose.model('JournalEntry', JournalEntrySchema);
-module.exports = JournalEntry;
+module.exports = mongoose.models.JournalEntry || mongoose.model('JournalEntry', journalEntrySchema);

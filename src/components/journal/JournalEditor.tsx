@@ -1,13 +1,15 @@
 ﻿import React, { useState } from "react";
 import { createJournalEntry } from "@/api/services/journalService";
+import { useUser } from "@/context/UserContext";
 
 export const JournalEditor = () => {
+  const { id } = useUser();
   const [text, setText] = useState("");
 
   async function handleSave() {
     if (!text.trim()) return;
     try {
-      await createJournalEntry({ text });
+      await createJournalEntry({ text, userId: id });
       alert("Journal entry saved!");
       setText("");
     } catch (error) {

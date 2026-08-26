@@ -8,7 +8,13 @@ const ritualTemplateSchema = new mongoose.Schema({
   rewards: Object,
   userId: String,
   assignedTo: String,
-  status: { type: String, default: 'active' }
+  status: { type: String, default: 'active' },
+  repeat: String,
+  time: String,
+  duration: Number,
+  xpOnTime: Number,
+  xpLate: Number,
+  xpMissed: Number,
 }, { timestamps: true });
 
 const RitualTemplate = mongoose.models.RitualTemplate ||
